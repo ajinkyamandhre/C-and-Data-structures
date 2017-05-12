@@ -1,3 +1,9 @@
+/*
+The code is written by Ajinkya Mandhre
+For Educational purpose of understanding the topic and cnocepts
+This is a part of assignments that where given by Prof.Ron Mak
+*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -65,8 +71,6 @@ int main()
 
 cout << "Statistics for file " << INPUT_FILE_NAME << ":" << endl;
 cout << endl;
-
-/***** Complete this program. *****/
 
 cout << "Lines: " << line_count << endl;
 cout << "Characters: " << character_count << endl;
