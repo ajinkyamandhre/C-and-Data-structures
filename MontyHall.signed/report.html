@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta name="Version" content="0.3"/>
+<meta name="Submission" content="16090808342355865231572556937"/>
+<meta name="Problem" content="16090503241bdegv7h6ohumko6r4jhc40tq"/>
+<meta name="Level" content="1"/>
+<meta name="Time" content="2016-09-08T08:34:18Z"/>
+<meta name="ID" content="MontyHall"/>
+<meta name="User" content="16090808147398810670381536779"/>
+<meta name="Elapsed" content="1009 ms"/>
+<style type="text/css">
+.header {font-weight: bold; font-size: 1.2em; }
+.item {font-weight: bold;}
+.pass {color: green;}
+.fail {color: red;}
+table.file td {padding-right: 1em; background: #FFF; }
+.linenumber {color: gray;}
+.footnote {font-size: 0.7em;}
+table {font-size: 0.9em;}
+td, th { background: #EEE; margin: 0.5em; padding: 0.25em;}
+table.output td {vertical-align: top;}
+div.footnotes { border-top: 1px solid gray; padding-top: 0.5em; }
+</style>
+<title>Report</title>
+</head>
+<body>
+<p class="header run">Testing MontyHall.cpp</p>
+<p class="caption">Command line arguments:</p>
+<p class="caption">Input:</p>
+<pre class="output">  #     Car     First    Opened    Second      Win        Win
+       Here    Choice      Door    Choice    First     Second
+
+   1  	   3	   2	   1	   3			 yes
+   2  	   1	   2	   3	   1			 yes
+   3  	   1	   2	   3	   1			 yes
+   4  	   1	   1	   3	   2	     yes
+   5  	   1	   3	   2	   1			 yes
+   6  	   1	   1	   3	   2	     yes
+   7  	   1	   1	   2	   3	     yes
+   8  	   3	   3	   2	   1	     yes
+   9  	   1	   1	   2	   3	     yes
+  10  	   2	   3	   1	   2			 yes
+  11  	   2	   3	   1	   2			 yes
+  12  	   2	   2	   3	   1	     yes
+  13  	   2	   3	   1	   2			 yes
+  14  	   3	   2	   1	   3			 yes
+  15  	   2	   3	   1	   2			 yes
+  16  	   1	   3	   2	   1			 yes
+  17  	   1	   1	   2	   3	     yes
+  18  	   1	   1	   2	   3	     yes
+  19  	   2	   1	   3	   2			 yes
+  20  	   1	   2	   3	   1			 yes
+  21  	   3	   2	   1	   3			 yes
+  22  	   2	   3	   1	   2			 yes
+  23  	   2	   2	   1	   3	     yes
+  24  	   1	   1	   2	   3	     yes
+  25  	   2	   3	   1	   2			 yes
+  26  	   1	   2	   3	   1			 yes
+  27  	   1	   2	   3	   1			 yes
+  28  	   1	   2	   3	   1			 yes
+  29  	   2	   2	   1	   3	     yes
+  30  	   2	   3	   1	   2			 yes
+  31  	   1	   3	   2	   1			 yes
+  32  	   2	   3	   1	   2			 yes
+  33  	   3	   2	   1	   3			 yes
+  34  	   2	   3	   1	   2			 yes
+  35  	   3	   2	   1	   3			 yes
+  36  	   2	   1	   3	   2			 yes
+  37  	   3	   1	   2	   3			 yes
+  38  	   3	   2	   1	   3			 yes
+  39  	   3	   2	   1	   3			 yes
+  40  	   3	   2	   1	   3			 yes
+  41  	   3	   1	   2	   3			 yes
+  42  	   1	   1	   3	   2	     yes
+  43  	   3	   3	   1	   2	     yes
+  44  	   3	   1	   2	   3			 yes
+  45  	   3	   3	   2	   1	     yes
+  46  	   2	   3	   1	   2			 yes
+  47  	   3	   1	   2	   3			 yes
+  48  	   3	   2	   1	   3			 yes
+  49  	   3	   1	   2	   3			 yes
+  50  	   2	   3	   1	   2			 yes
+  51  	   3	   2	   1	   3			 yes
+  52  	   1	   3	   2	   1			 yes
+  53  	   1	   3	   2	   1			 yes
+  54  	   3	   1	   2	   3			 yes
+  55  	   2	   3	   1	   2			 yes
+  56  	   3	   2	   1	   3			 yes
+  57  	   2	   1	   3	   2			 yes
+  58  	   3	   2	   1	   3			 yes
+  59  	   2	   2	   3	   1	     yes
+  60  	   3	   3	   1	   2	     yes
+  61  	   3	   3	   1	   2	     yes
+  62  	   3	   1	   2	   3			 yes
+  63  	   3	   1	   2	   3			 yes
+  64  	   2	   3	   1	   2			 yes
+  65  	   1	   1	   3	   2	     yes
+  66  	   3	   1	   2	   3			 yes
+  67  	   3	   1	   2	   3			 yes
+  68  	   2	   1	   3	   2			 yes
+  69  	   3	   2	   1	   3			 yes
+  70  	   3	   2	   1	   3			 yes
+  71  	   1	   2	   3	   1			 yes
+  72  	   1	   2	   3	   1			 yes
+  73  	   2	   3	   1	   2			 yes
+  74  	   2	   1	   3	   2			 yes
+  75  	   1	   2	   3	   1			 yes
+  76  	   2	   2	   1	   3	     yes
+  77  	   1	   3	   2	   1			 yes
+  78  	   3	   2	   1	   3			 yes
+  79  	   2	   3	   1	   2			 yes
+  80  	   2	   1	   3	   2			 yes
+  81  	   3	   3	   2	   1	     yes
+  82  	   2	   2	   3	   1	     yes
+  83  	   2	   1	   3	   2			 yes
+  84  	   1	   1	   3	   2	     yes
+  85  	   2	   2	   1	   3	     yes
+  86  	   2	   1	   3	   2			 yes
+  87  	   3	   3	   1	   2	     yes
+  88  	   2	   1	   3	   2			 yes
+  89  	   2	   2	   3	   1	     yes
+  90  	   1	   3	   2	   1			 yes
+  91  	   3	   2	   1	   3			 yes
+  92  	   1	   3	   2	   1			 yes
+  93  	   3	   2	   1	   3			 yes
+  94  	   2	   2	   1	   3	     yes
+  95  	   3	   2	   1	   3			 yes
+  96  	   2	   2	   1	   3	     yes
+  97  	   2	   1	   3	   2			 yes
+  98  	   1	   3	   2	   1			 yes
+  99  	   3	   3	   1	   2	     yes
+ 100  	   2	   2	   3	   1	     yes
+
+  29 wins if stay with the first choice
+  71 wins if switch to the second choice
+
+Win ratio of switch over stay: 2.4
+</pre>
+<p class="header studentFiles">Student files</p>
+<p class="caption">MontyHall.cpp:</p>
+<pre>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;ctime&gt;
+#include &lt;cstdlib&gt;
+
+using namespace std;
+typedef int Door;
+
+const int SIMULATION_COUNT = 100;
+
+/**
+ * Suggested problem decomposition.
+ * You do not have to use these function declarations.
+ */
+
+void printHeader();
+void simulate(int sequence, int&amp; win1, int&amp; win2);
+Door hideCar();
+void makeFirstChoice(int&amp; first_choice);
+Door MontyOpenDoor(Door first_Choice, Door car_Behind_Door);
+void remainingdoor(int&amp; remaining_door,int&amp; first_choice,int&amp; monty_first_open);
+void makefinalchoice(int sequence,int&amp; first_choice,int&amp; remaining_door,int&amp; car_Behind_Door,int&amp; monty_first_open,int&amp; win1,int&amp; win2);
+
+
+int main()
+{
+    int win1 = 0, win2 = 0;
+
+    srand(time(NULL));  // seed the random number generator
+    printHeader();// used to print the header of table
+
+    // Run the simulations.
+    for (int i = 1; i &lt;= SIMULATION_COUNT; i++)
+    	{
+    		simulate(i, win1, win2);
+    	}
+
+    cout &lt;&lt; endl;
+    cout &lt;&lt; setw(4) &lt;&lt; win1 &lt;&lt; " wins if stay with the first choice" &lt;&lt; endl;
+    cout &lt;&lt; setw(4) &lt;&lt; win2 &lt;&lt; " wins if switch to the second choice" &lt;&lt; endl;
+
+    cout.setf(ios::fixed);
+    cout.setf(ios::showpoint);
+    cout.precision(1);
+
+    cout &lt;&lt; endl;
+    cout &lt;&lt; "Win ratio of switch over stay: ";
+    cout &lt;&lt; static_cast&lt;double&gt;(win2)/win1 &lt;&lt; endl;
+}
+
+
+
+void simulate(int sequence,int&amp; win1,int&amp; win2)
+{
+	int car_Behind_Door=0,first_choice=0,monty_first_open=0,remaining_door=0;
+
+
+	car_Behind_Door=hideCar();/*function to hide the car behind a door---*/
+	
+	
+	makeFirstChoice(first_choice);/*function to select a door from user randomly------*/
+		
+
+	monty_first_open=MontyOpenDoor(first_choice,car_Behind_Door);/*--this function to open a random door having goat--*/
+	
+	
+	remainingdoor(remaining_door,first_choice,monty_first_open);/*-function to get the number of leftout door-----*/
+	
+	
+	makefinalchoice(sequence,first_choice,remaining_door,car_Behind_Door,monty_first_open,win1,win2);
+	/*-function to make choice of switch or stay--*/
+
+}
+
+Door hideCar()
+{
+
+	int car_Behind_Door=(rand()%3)+1;
+
+	return car_Behind_Door;
+}
+
+void makeFirstChoice(int&amp; first_choice)
+{
+
+	 first_choice=(rand()%3)+1;
+
+}
+
+Door MontyOpenDoor(Door first_choice, Door car_Behind_Door)
+{
+	int monty_first_open=0;
+
+	do
+	{
+		monty_first_open=(rand()%3)+1;
+
+	}while(monty_first_open==car_Behind_Door || monty_first_open==first_choice);
+
+	return monty_first_open;
+}
+
+void remainingdoor(int&amp; remaining_door,int&amp; first_choice,int&amp; monty_first_open)
+{
+	do
+	{
+		remaining_door=(rand()%3)+1;
+
+	}while(remaining_door==first_choice || remaining_door==monty_first_open);
+
+
+}
+
+void makefinalchoice(int sequence,int&amp; first_choice,int&amp; remaining_door,int&amp; car_Behind_Door,int&amp; monty_first_open,int&amp; win1,int&amp; win2)
+{
+	int selection=0,flag1=0;
+
+	selection=(rand()%2)+1;
+
+	if(selection==1)
+	{
+		if(first_choice==car_Behind_Door)
+		{
+
+			win1++;
+			flag1=1;
+		}
+		else
+		{
+			win2++;
+			flag1=0;
+		}
+
+	}
+	else if(selection==2)
+	{
+
+		if(remaining_door==car_Behind_Door)
+		{
+
+			win2++;
+			flag1=0;
+		}
+		else
+		{
+			win1++;
+			flag1=1;
+		}
+	}
+
+	if(flag1)
+	{
+		cout&lt;&lt;setw(4)&lt;&lt;sequence&lt;&lt;"  "&lt;&lt;"\t"&lt;&lt;setw(4)&lt;&lt;car_Behind_Door&lt;&lt;"\t"&lt;&lt;setw(4)&lt;&lt;first_choice&lt;&lt;"\t"&lt;&lt;setw(4)&lt;&lt;monty_first_open&lt;&lt;"\t"&lt;&lt;setw(4)&lt;&lt;remaining_door&lt;&lt;"\t    "&lt;&lt;setw(4)&lt;&lt;"yes"&lt;&lt;endl;
+	}
+	else
+	{
+		cout&lt;&lt;setw(4)&lt;&lt;sequence&lt;&lt;"  "&lt;&lt;"\t"&lt;&lt;setw(4)&lt;&lt;car_Behind_Door&lt;&lt;"\t"&lt;&lt;setw(4)&lt;&lt;first_choice&lt;&lt;"\t"&lt;&lt;setw(4)&lt;&lt;monty_first_open&lt;&lt;"\t"&lt;&lt;setw(4)&lt;&lt;remaining_door&lt;&lt;"\t\t\t"&lt;&lt;setw(4)&lt;&lt;"yes"&lt;&lt;endl;
+	}
+
+}
+
+
+void printHeader()
+{
+
+	cout&lt;&lt;"  #    "&lt;&lt;" Car    "&lt;&lt;" First    "&lt;&lt;"Opened    "&lt;&lt;"Second    "&lt;&lt;"  Win     "&lt;&lt;"   Win"&lt;&lt;endl;
+	cout&lt;&lt;"       "&lt;&lt;"Here    "&lt;&lt;"Choice    "&lt;&lt;"  Door    "&lt;&lt;"Choice    "&lt;&lt;"First     "&lt;&lt;"Second"&lt;&lt;endl&lt;&lt;endl;
+
+}
+/***** Complete this program. ****/
+</pre>
+<p class="header score">Score</p>
+<p class="score">0</p>
+<p class="download"><a href="MontyHall.signed.zip">Download</a></p>
+<div class="footnotes"><div class="footnote">2016-09-08T08:34:18Z</div>
+</div>
+</body></html>
