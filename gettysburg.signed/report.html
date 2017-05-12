@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta name="Version" content="0.3"/>
+<meta name="Submission" content="16090123553860589914653447895"/>
+<meta name="Problem" content="1608280522e4xay023hge47ns24q08fhx9u"/>
+<meta name="Level" content="1"/>
+<meta name="Time" content="2016-09-01T23:55:18Z"/>
+<meta name="ID" content="gettysburg"/>
+<meta name="User" content="16090123488737370331926400775"/>
+<meta name="Elapsed" content="6559 ms"/>
+<style type="text/css">
+.header {font-weight: bold; font-size: 1.2em; }
+.item {font-weight: bold;}
+.pass {color: green;}
+.fail {color: red;}
+table.file td {padding-right: 1em; background: #FFF; }
+.linenumber {color: gray;}
+.footnote {font-size: 0.7em;}
+table {font-size: 0.9em;}
+td, th { background: #EEE; margin: 0.5em; padding: 0.25em;}
+table.output td {vertical-align: top;}
+div.footnotes { border-top: 1px solid gray; padding-top: 0.5em; }
+</style>
+<title>Report</title>
+</head>
+<body>
+<p class="header run">Testing gettysburg.cpp</p>
+<p class="caption">Command line arguments:</p>
+<p class="caption">Input:</p>
+<pre class="output">Statistics for file GettysburgAddress.txt:
+
+Lines: 25
+Characters: 1434
+Words: 271
+Lower-case letters: 1138
+Upper-case letters: 11
+Spaces: 244
+Punctuation marks: 41
+</pre>
+<span class="pass">pass</span><p class="header studentFiles">Student files</p>
+<p class="caption">gettysburg.cpp:</p>
+<pre>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+const string INPUT_FILE_NAME = "GettysburgAddress.txt";
+
+int main()
+{
+
+	string line;
+	int line_count = 0;
+	int character_count = 0;
+	int word_count = 0;
+	int lower_count = 0;
+	int upper_count = 0;
+	int space_count = 0;
+	int punctuation_count = 0;
+	int i;
+	ifstream input;
+
+	input.open(INPUT_FILE_NAME);
+	if (input.fail())
+  	{
+   		cout &lt;&lt; "Failed to open " &lt;&lt; INPUT_FILE_NAME &lt;&lt; endl;
+   		return -1;
+ 	 }
+
+	while(getline(input,line))
+	{
+		for(i=0;line[i]!='\0';i++)
+		{
+			if( line[i]&lt;=90 &amp;&amp; line[i]&gt;=65)
+			{
+				upper_count=upper_count+1;
+			}
+			if(line[i]&lt;='z' &amp;&amp; line[i]&gt;='a')
+			{
+				lower_count=lower_count+1;
+			}
+			if(line[i]==32)
+			{
+				space_count=space_count+1;
+			}
+			if(line[i]=='-'|| line[i]=='.' || line[i]==',')
+			{
+				punctuation_count=punctuation_count+1;
+			}
+
+			if((line[i]&lt;=90 &amp;&amp; line[i]&gt;=65)|| (line[i]&lt;='z' &amp;&amp; line[i]&gt;='a'))
+			{
+				 if(line[i+1]=='-'|| line[i+1]=='.'||line[i+1]==',' || line[i+1]=='\0' || line[i+1]==' ')
+				{
+					word_count=word_count+1;
+				}
+			}
+
+		}//for
+
+		character_count=character_count+i;
+		line_count=line_count+1;
+
+	}//while
+
+cout &lt;&lt; "Statistics for file " &lt;&lt; INPUT_FILE_NAME &lt;&lt; ":" &lt;&lt; endl;
+cout &lt;&lt; endl;
+
+/***** Complete this program. *****/
+
+cout &lt;&lt; "Lines: " &lt;&lt; line_count &lt;&lt; endl;
+cout &lt;&lt; "Characters: " &lt;&lt; character_count &lt;&lt; endl;
+cout &lt;&lt; "Words: " &lt;&lt; word_count &lt;&lt; endl;
+cout &lt;&lt; "Lower-case letters: " &lt;&lt; lower_count &lt;&lt; endl;
+cout &lt;&lt; "Upper-case letters: " &lt;&lt; upper_count &lt;&lt; endl;
+cout &lt;&lt; "Spaces: " &lt;&lt; space_count &lt;&lt; endl;
+cout &lt;&lt; "Punctuation marks: " &lt;&lt; punctuation_count &lt;&lt; endl;
+}//main ends
+</pre>
+<p class="header providedFiles">Provided files</p>
+<p class="caption">GettysburgAddress.txt:</p>
+<pre>Four score and seven years ago our fathers brought forth on this continent
+a new nation, conceived in liberty, and dedicated to the proposition that
+all men are created equal.
+
+Now we are engaged in a great civil war, testing whether that nation,
+or any nation so conceived and so dedicated, can long endure. We are met
+on a great battlefield of that war. We have come to dedicate a portion
+of that field, as a final resting place for those who here gave their lives
+that that nation might live. It is altogether fitting and proper that we
+should do this.
+
+But, in a larger sense, we can not dedicate, we can not consecrate,
+we can not hallow this ground. The brave men, living and dead,
+who struggled here, have consecrated it, far above our poor power
+to add or detract. The world will little note, nor long remember
+what we say here, but it can never forget what they did here.
+It is for us the living, rather, to be dedicated here to the
+unfinished work which they who fought here have thus far so nobly
+advanced. It is rather for us to be here dedicated to the great task
+remaining before us--that from these honored dead we take increased
+devotion to that cause for which they gave the last full measure of
+devotion--that we here highly resolve that these dead shall not have
+died in vain--that this nation, under God, shall have a new birth of
+freedom--and that government of the people, by the people, for the people,
+shall not perish from the earth.
+</pre>
+<p class="header score">Score</p>
+<p class="score">1/1</p>
+<p class="download"><a href="gettysburg.signed.zip">Download</a></p>
+<div class="footnotes"><div class="footnote">2016-09-01T23:55:18Z</div>
+</div>
+</body></html>
