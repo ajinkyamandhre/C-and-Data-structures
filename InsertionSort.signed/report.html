@@ -1,0 +1,2022 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta name="Version" content="0.3"/>
+<meta name="Submission" content="16120811294457441328928364065"/>
+<meta name="Problem" content="16112406537pbyc2ouvrt86esy1xvl2284g"/>
+<meta name="Level" content="1"/>
+<meta name="Time" content="2016-12-08T11:29:09Z"/>
+<meta name="ID" content="InsertionSort"/>
+<meta name="User" content="16112003362en3na5wiz2ibjdksuk82gxio"/>
+<meta name="Elapsed" content="14815 ms"/>
+<style type="text/css">
+.header {font-weight: bold; font-size: 1.2em; }
+.item {font-weight: bold;}
+.pass {color: green;}
+.fail {color: red;}
+table.file td {padding-right: 1em; background: #FFF; }
+.linenumber {color: gray;}
+.footnote {font-size: 0.7em;}
+table {font-size: 0.9em;}
+td, th { background: #EEE; margin: 0.5em; padding: 0.25em;}
+table.output td {vertical-align: top;}
+div.footnotes { border-top: 1px solid gray; padding-top: 0.5em; }
+</style>
+<title>Report</title>
+</head>
+<body>
+<p class="header run">Testing SortTests.cpp</p>
+<pre class="output">
+===============
+Unsorted random
+===============
+
+N = 100
+
+                ALGORITHM          MOVES       COMPARES   MILLISECONDS
+           Selection sort            186          4,950              0
+           Insertion sort          4,974             99              0
+     Shellsort suboptimal            648            324              0
+        Shellsort optimal            812            470              0
+     Quicksort suboptimal            414            207              0
+        Quicksort optimal            428            214              0
+                Mergesort***** Sort error! *****
+
+N = 1,000
+
+                ALGORITHM          MOVES       COMPARES   MILLISECONDS
+           Selection sort          1,976        499,500              2
+           Insertion sort        480,652            999              7
+     Shellsort suboptimal         14,504          7,252              0
+        Shellsort optimal         14,367          8,910              0
+     Quicksort suboptimal          5,612          2,806              0
+        Quicksort optimal          5,794          2,897              0
+                Mergesort***** Sort error! *****
+
+==============
+Already sorted
+==============
+
+N = 100
+
+                ALGORITHM          MOVES       COMPARES   MILLISECONDS
+           Selection sort              0          4,950              0
+           Insertion sort              0             99              0
+     Shellsort suboptimal              0              0              0
+        Shellsort optimal            342              0              0
+     Quicksort suboptimal            198             99              0
+        Quicksort optimal            198             99              0
+                Mergesort              0              0              0
+
+N = 1,000
+
+                ALGORITHM          MOVES       COMPARES   MILLISECONDS
+           Selection sort              0        499,500              2
+           Insertion sort              0            999              0
+     Shellsort suboptimal              0              0              0
+        Shellsort optimal          5,457              0              0
+     Quicksort suboptimal          1,998            999              1
+        Quicksort optimal          1,998            999              0
+                Mergesort              0              0              0
+
+==============
+Reverse sorted
+==============
+
+N = 100
+
+                ALGORITHM          MOVES       COMPARES   MILLISECONDS
+           Selection sort            100          4,950              0
+           Insertion sort          9,900             99              0
+     Shellsort suboptimal            520            260              0
+        Shellsort optimal            572            230              0
+     Quicksort suboptimal            198             99              0
+        Quicksort optimal            296            148              0
+                Mergesort***** Sort error! *****
+
+N = 1,000
+
+                ALGORITHM          MOVES       COMPARES   MILLISECONDS
+           Selection sort          1,000        499,500              3
+           Insertion sort        999,000            999             15
+     Shellsort suboptimal          9,400          4,700              0
+        Shellsort optimal          9,377          3,920              0
+     Quicksort suboptimal          1,998            999              1
+        Quicksort optimal          2,996          1,498              0
+                Mergesort***** Sort error! *****
+
+=========
+All zeros
+=========
+
+N = 100
+
+                ALGORITHM          MOVES       COMPARES   MILLISECONDS
+           Selection sort              0          4,950              0
+           Insertion sort              0             99              0
+     Shellsort suboptimal              0              0              0
+        Shellsort optimal          6,908          6,566              0
+     Quicksort suboptimal            712            356              0
+        Quicksort optimal            712            356              0
+                Mergesort              0              0              0
+
+N = 1,000
+
+                ALGORITHM          MOVES       COMPARES   MILLISECONDS
+           Selection sort              0        499,500              2
+           Insertion sort              0            999              0
+     Shellsort suboptimal              0              0              0
+        Shellsort optimal        683,971        678,514              8
+     Quicksort suboptimal         10,088          5,044              0
+        Quicksort optimal         10,088          5,044              0
+                Mergesort              0              0              0
+
+Done! 0 seconds.
+</pre>
+<p class="header studentFiles">Student files</p>
+<p class="caption">InsertionSort.cpp:</p>
+<pre>/* Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#include "InsertionSort.h"
+
+/**
+ * Default constructor.
+ */
+InsertionSort::InsertionSort() : VectorSorter() {}
+
+/**
+ * Destructor.
+ */
+InsertionSort::~InsertionSort() {}
+
+/**
+ * Get the name of this sorting algorithm.
+ * @return the name.
+ */
+string InsertionSort::name() const { return "Insertion sort"; }
+
+/**
+ * Run the insertion sort algorithm.
+ * @throws an exception if an error occurred.
+ */
+
+/*This algorithm is cited from-
+ *  https://www.tutorialspoint.com/data_structures_algorithms/insertion_sort_program_in_c.htm
+ * */
+void InsertionSort::run_sort_algorithm() throw (string)
+{
+    /***** Complete this member function. *****/
+
+	   int valueToInsert;
+	   int holePosition;
+	   int i;
+	   // loop through all numbers
+	   for(i = 1;i &lt;data.size(); i++)
+	   {
+		   compare_count++;
+	      // select a value to be inserted.
+	      valueToInsert =data.at(i);
+	      // select the hole position where number is to be inserted
+	      holePosition = i;
+	      // check if previous no. is larger than value to be inserted
+	      while (holePosition &gt; 0 &amp;&amp; data.at(holePosition-1)&gt; valueToInsert)
+	      {
+	    	  swap(holePosition, (holePosition-1));
+	    	//  data.at(holePosition) = data.at(holePosition-1);
+	         holePosition--;
+	      }
+	      if(holePosition != i)
+	      {
+	         // insert the number at hole position
+	    	  data.at(holePosition) = valueToInsert;
+	      }
+	   }
+}
+</pre>
+<p class="caption">LinkedList.cpp:</p>
+<pre>#include &lt;iostream&gt;
+#include "LinkedList.h"
+using namespace std;
+
+/**
+ * Default constructor.
+ */
+LinkedList::LinkedList() : head(nullptr), tail(nullptr), size(0) {};
+
+/**
+ * Constructor: Create a new list from an existing one.
+ * Both lists will share the nodes.
+ * @param head the head of the existing list.
+ * @param tail the tail of the existing list.
+ * @param size the size of the existing list.
+ */
+LinkedList::LinkedList(Node *head, Node *tail, const int size)
+{
+    this-&gt;head = head;
+    this-&gt;tail = tail;
+    this-&gt;tail-&gt;next = nullptr;
+
+    this-&gt;size = size;
+}
+
+/**
+ * Destructor.
+ */
+LinkedList::~LinkedList() {}
+
+/**
+ * Get the head of the list.
+ * @return the head.
+ */
+Node *LinkedList::get_head() const { return head; }
+
+/**
+ * Get the tail of the list.
+ * @return the tail.
+ */
+Node *LinkedList::get_tail() const { return tail; }
+
+/**
+ * Get the size of the list.
+ * @return the size.
+ */
+int LinkedList::get_size() const { return size; }
+
+/**
+ * Set the head, tail, and size of the linked list.
+ * @param head the head of the linked list.
+ * @param tail the tail of the linked list.
+ * @param size the size of the linked list.
+ */
+void LinkedList::set(Node *head, Node *tail, int size)
+{
+    this-&gt;head = head;
+    this-&gt;tail = tail;
+    this-&gt;tail-&gt;next = nullptr;
+    this-&gt;size = size;
+}
+
+/**
+ * Remove the head of the list and return the removed node.
+ * @return the removed node.
+ */
+Node *LinkedList::remove_head()
+{
+    if (head == nullptr) return nullptr;
+
+    Node *removed_head = head;
+    head = head-&gt;next;
+
+    // Is the list now empty?
+    if (head == nullptr) tail = nullptr;
+
+    size--;
+    return removed_head;
+}
+
+/**
+ * Add a node to the tail of the list.
+ * @param value the value of the node to add.
+ */
+void LinkedList::add(int value)
+{
+    Node *node = new Node(value);
+    add(node);
+}
+
+/**
+ * Add a node to the tail of the list.
+ * @param node the node to add.
+ */
+void LinkedList::add(Node *node)
+{
+    // First node.
+    if (head == nullptr)
+    {
+        head = tail = node;
+    }
+
+    // Subsequent node.
+    else
+    {
+        tail-&gt;next = node;
+        tail = node;
+    }
+
+    node-&gt;next = nullptr;
+    size++;
+}
+
+/**
+ * Delete all the nodes of the list.
+ */
+void LinkedList::clear()
+{
+    // Repeatedly delete the head node until the list is empty.
+    while (head != nullptr)
+    {
+        Node *next = head-&gt;next;
+        delete head;
+        head = next;
+    }
+
+    tail = nullptr;
+    size = 0;
+}
+
+/**
+ * Reset the head, tail, and size of the list.
+ */
+void LinkedList::reset()
+{
+    head = tail = nullptr;
+    size = 0;
+}
+
+/**
+ * Print the values of the list's nodes.
+ */
+void LinkedList::print() const
+{
+    for (Node *ptr = head; ptr != nullptr; ptr = ptr-&gt;next)
+    {
+        cout &lt;&lt; " " &lt;&lt; ptr-&gt;value;
+    }
+    cout &lt;&lt; endl;
+}
+
+/**
+ * Split this list into two sublists.
+ * @param list1 the first sublist.
+ * @param list2 the second sublist.
+ */
+void LinkedList::split(LinkedList&amp; list1, LinkedList&amp; list2)
+{
+    /***** Complete this member function. *****/
+}
+
+/**
+ * Add another list to the end of this list.
+ * @param other_list the other list.
+ */
+void LinkedList::concatenate(LinkedList&amp; other_list)
+{
+    /***** Complete this member function. *****/
+}
+</pre>
+<p class="caption">MergeSort.cpp:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#include &lt;string&gt;
+#include "MergeSort.h"
+
+/**
+ * Default constructor.
+ */
+MergeSort::MergeSort() : ListSorter() {}
+
+/**
+ * Destructor.
+ */
+MergeSort::~MergeSort() {}
+
+/**
+ * Get the name of this sorting algorithm.
+ * @return the name.
+ */
+string MergeSort::name() const { return "Mergesort"; }
+
+/**
+ * Run the mergesort algorithm.
+ * @throws an exception if an error occurred.
+ */
+void MergeSort::run_sort_algorithm()
+    throw (string)
+{
+    // Defensive programming: Make sure we end up
+    // with the same size list after sorting.
+    int size_before = data.get_size();
+
+    mergesort(data);
+
+    int size_after = data.get_size();
+    if (size_before != size_after)
+    {
+        string message = "***** Size mismatch: before " +
+                         to_string(size_before) + ", size after " +
+                         to_string(size_after);
+        throw message;
+    }
+}
+
+/**
+ * The mergesort algorithm recursively splits and merges data lists.
+ * @param list the list of data to sort.
+ */
+void MergeSort::mergesort(LinkedList&amp; list)
+{
+    /***** Complete this member function. *****/
+}
+
+/**
+ * Merge two sublists back into a single list.
+ * @param list the merged list.
+ * @param sublist1 the first sublist.
+ * @param sublist2 the second sublist.
+ */
+void MergeSort::merge(LinkedList&amp; list,
+                      LinkedList&amp; sublist1, LinkedList&amp; sublist2)
+{
+    /***** Complete this member function. *****/
+}
+
+/**
+ * Clear the data.
+ */
+void MergeSort::clear() { data.clear(); }
+</pre>
+<p class="caption">QuickSortOptimal.cpp:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#include "QuickSortOptimal.h"
+#include&lt;iostream&gt;
+
+/**
+ * Get the name of this sorting algorithm.
+ * @return the name.
+ */
+
+int flag=0;
+
+QuickSortOptimal::QuickSortOptimal() {}
+
+/**
+ * Destructor.
+ */
+QuickSortOptimal::~QuickSortOptimal() {}
+
+/**
+ * Get the name of this sorting algorithm.
+ * @return the name.
+ */
+string QuickSortOptimal::name() const { return "Quicksort optimal"; }
+
+/**
+ * Choose a good pivot, the median-of-three:
+ * The middle value of the leftmost, rightmost, and center elements.
+ * This is a compromise since the most optimal pivot would be the
+ * median of the subrange, but that's too expensive to compute.
+ * @param left the left index of the subrange to sort.
+ * @param right the right index of the subrange to sort.
+ * @return the chosen pivot value.
+ */
+
+
+int QuickSortOptimal::choose_pivot_strategy(const int left, const int right)
+{
+    /***** Complete this member function. *****/
+	//cout&lt;&lt;"left "&lt;&lt;left&lt;&lt;"right "&lt;&lt;right&lt;&lt;endl;
+	int center = (left + right) / 2;
+	//cout&lt;&lt;"center "&lt;&lt;center&lt;&lt;endl;
+	int arr[3]={data[left],data[center],data[right]};
+
+    for (int i = 0; i&lt;3; ++i)
+    {
+        for (int j = i + 1; j &lt; 3; ++j)
+        {
+            if (arr[i] &gt; arr[j])
+            {
+               int  a =  arr[i];
+                arr[i] = arr[j];
+                arr[j] = a;
+            }
+        }
+    }
+  //  cout&lt;&lt;"data"&lt;&lt;data[1]&lt;&lt;endl;
+    /*if(data[1]==data[left])
+    {
+    	flag = left;
+    }
+    else   if(data[1]==data[center])
+    {
+    	flag = center;
+    }
+    else   if(data[1]==data[right])
+    {
+    	flag = right;
+    }*/
+
+	return arr[1];
+
+	//data[left] data[right] data[center];)
+	/*if(data[left]&gt;data[center] &amp;&amp; data[left]&gt;data[right])
+	{
+		//left is large
+		large=data[left];
+	}
+	if(data[center]&gt;data[left] &amp;&amp; data[center]&gt;data[right])
+	{
+		//center is large
+		large=data[center];
+	}
+	if(data[right]&gt;data[center] &amp;&amp; data[right]&gt;data[left])
+	{
+		//right is large
+		large=data[right];
+	}
+
+	if( (data[left] &lt;data[center]) &amp;&amp; (data[left]&lt; data[right]) )
+	{
+		small=data[left];
+	}
+	else if(data[center]&lt; data[right])
+	{
+			small=data[center];
+	}
+	else
+		small=data[right];
+	*/
+}
+</pre>
+<p class="caption">QuickSortSuboptimal.cpp:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#include "QuickSortSuboptimal.h"
+#include&lt;iostream&gt;
+/**
+ * Default constructor.
+ */
+
+//int flag=0;
+QuickSortSuboptimal::QuickSortSuboptimal() {}
+
+/**
+ * Destructor.
+ */
+QuickSortSuboptimal::~QuickSortSuboptimal() {}
+
+/**
+ * Get the name of this sorting algorithm.
+ * @return the name.
+ */
+string QuickSortSuboptimal::name() const { return "Quicksort suboptimal"; }
+
+/**
+ * Choose a bad pivot, always the leftmost element of the subrange.
+ * @param left the left index of the subrange to sort.
+ * @param right the right index of the subrange to sort.
+ * @return the chosen pivot value.
+ */
+int QuickSortSuboptimal::choose_pivot_strategy(const int left, const int right)
+{
+    /***** Complete this member function. *****/
+	//flag=left;
+	return data[left];
+}
+</pre>
+<p class="caption">QuickSorter.cpp:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#include "QuickSorter.h"
+#include&lt;iostream&gt;
+/**
+ * Default constructor.
+ */
+QuickSorter::QuickSorter() :
+		VectorSorter()
+{
+}
+
+/**
+ * Destructor.
+ */
+QuickSorter::~QuickSorter()
+{
+}
+
+/**
+ * Run the quicksort algorithm.
+ * @throws an exception if an error occurred.
+ */
+void QuickSorter::run_sort_algorithm() throw (string)
+{
+	quicksort(0, size - 1);
+}
+
+/**
+ * The quicksort algorithm recursively sorts data subranges.
+ * @param left the left index of the subrange to sort.
+ * @param right the right index of the subrange to sort.
+ */
+
+/*This code is cited from
+ * https://www.tutorialspoint.com/data_structures_algorithms/quick_sort_program_in_c.htm
+ * */
+void QuickSorter::quicksort(const int left, const int right)
+{
+	/***** Complete this member function. *****/
+//	cout&lt;&lt;"left "&lt;&lt;left&lt;&lt;"right "&lt;&lt;right&lt;&lt;endl;
+		int pivot = choose_pivot(left, right);
+		int index = partition(left, right,pivot);
+
+	      if (left &lt; index - 1)
+
+	            quicksort(left, index - 1);
+
+	      if (index &lt; right)
+
+	            quicksort(index, right);
+
+}
+/*	if (right - left &lt;= 0)
+	{
+		return;
+	} else
+	{
+		int pivot = choose_pivot(left, right);
+       int partitionPoint = partition(left, right, pivot);
+		//int partitionPoint = left;
+		quicksort(left, partitionPoint - 1);
+		quicksort(partitionPoint + 1, right);
+	}
+*/
+
+/**
+ * Choose the pivot according to a pivot strategy.
+ * The chosen pivot will be moved temporarily to the right end.
+ * @param left the left index of the partition to sort.
+ * @param right the right index of the partition to sort.
+ * @return the pivot value.
+ */
+
+int QuickSorter::choose_pivot(const int left, const int right)
+{
+	return choose_pivot_strategy(left, right);
+}
+
+/**
+ * Partition the subrange by moving data elements &lt; pivot to the left
+ * and data elements &gt; pivot to the right.
+ * @param left the left index of the partition to sort.
+ * @param right the right index of the partition to sort.
+ * @param pivot the pivot value.
+ */
+
+/*
+ * This code is cited from
+ * https://www.tutorialspoint.com/data_structures_algorithms/quick_sort_program_in_c.htm
+ * */
+int QuickSorter::partition(const int left, const int right, const int pivot)
+{
+	/***** Complete this member function. *****/
+
+	int i = left, j = right;
+
+	int tmp;
+
+	while (i &lt;= j)
+	{
+		while (data[i] &lt; pivot)
+			i++;
+		while (data[j] &gt; pivot)
+			j--;
+		if (i &lt;= j)
+		{
+			compare_count++;
+			swap(i,j);
+			i++;
+			j--;
+		}
+
+	}
+
+	return i;
+}
+</pre>
+<p class="caption">ShellSortOptimal.cpp:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#include "ShellSortOptimal.h"
+
+/**
+ * Default constructor.
+ */
+ShellSortOptimal::ShellSortOptimal() {}
+
+/**
+ * Destructor.
+ */
+ShellSortOptimal::~ShellSortOptimal() {}
+
+/**
+ * Get the name of this sorting algorithm.
+ * @return the name.
+ */
+string ShellSortOptimal::name() const { return "Shellsort optimal"; }
+
+/**
+ * Run the optimal shellsort algorithm.
+ * According to Don Knuth:
+ * h = 3*i + 1 for i = 0, 1, 2, ... used in reverse.
+ * @throws an exception if an error occurred.
+ */
+
+/*This code is cited from
+ * https://www.tutorialspoint.com/data_structures_algorithms/shell_sort_program_in_c.htm
+ * */
+void ShellSortOptimal::run_sort_algorithm() throw (string)
+{
+
+    /***** Complete this member function. *****/
+	int inner, outer;
+	   int valueToInsert;
+	   int interval = 1;
+	   int elements = size;
+	   int i = 0;
+
+	   while (interval &lt;= elements / 3)
+	{
+		interval = interval * 3 + 1;
+	}
+
+	while (interval &gt; 0)
+	{
+
+		for (outer = interval; outer &lt; elements; outer++)
+		{
+			valueToInsert = data[outer];
+			inner = outer;
+
+			while (inner &gt; interval - 1 &amp;&amp; data[inner - interval] &gt;= valueToInsert)
+			{
+				compare_count++;
+				data[inner] = data[inner - interval];
+				move_count=move_count+1;
+				inner -= interval;
+			}
+			data[inner] = valueToInsert;
+			move_count += 1;
+		}
+		interval = (interval - 1) / 3;
+		i++;
+	}
+}
+</pre>
+<p class="caption">ShellSortSuboptimal.cpp:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#include "ShellSortSuboptimal.h"
+
+/**
+ * Default constructor.
+ */
+ShellSortSuboptimal::ShellSortSuboptimal() {}
+
+/**
+ * Destructor.
+ */
+ShellSortSuboptimal::~ShellSortSuboptimal() {}
+
+/**
+ * Get the name of this sorting algorithm.
+ * @return the name.
+ */
+string ShellSortSuboptimal::name() const { return "Shellsort suboptimal"; }
+
+/**
+ * Run the suboptimal shellsort algorithm.
+ * @throws an exception if an error occurred.
+ */
+
+/*
+ * This algorithm is taken from
+ * http://www.cplusplus.com/forum/general/123961/
+ * */
+void ShellSortSuboptimal::run_sort_algorithm() throw (string)
+{
+    /***** Complete this member function. *****/
+
+	int gap, i, j, temp;
+	int n=size;
+
+	    for (gap = n/2; gap &gt; 0; gap /= 2)
+
+	        for (i = gap; i &lt; n; i++)
+
+	            for (j=i-gap; j&gt;=0 &amp;&amp; data[j]&gt;data[j+gap]; j-=gap)
+	            {
+	            	 compare_count++;
+	            	 swap(j,j+gap);
+	            }
+}
+
+</pre>
+<p class="header providedFiles">Provided files</p>
+<p class="caption">DataAllZeros.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef DATAALLZEROS_H_
+#define DATAALLZEROS_H_
+
+#include "DataGenerator.h"
+
+/**
+ * Generator for data that is all zeros.
+ */
+class DataAllZeros: public DataGenerator
+{
+public:
+    DataAllZeros() {}
+    virtual ~DataAllZeros() {}
+
+    /**
+     * Get the name of this data generator.
+     * @return the name.
+     */
+    string name() { return "All zeros"; }
+
+    /**
+     * Generate all zeros to fill a data vector.
+     * @param data the data vector to fill.
+     */
+    virtual void generate_data(vector&lt;int&gt;&amp; data, int size)
+    {
+        for (int i = 0; i &lt; size; i++) data.push_back(0);
+    }
+};
+
+#endif /* DATAALLZEROS_H_ */
+</pre>
+<p class="caption">DataGenerator.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef DATAGENERATOR_H_
+#define DATAGENERATOR_H_
+
+#include &lt;string&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+/**
+ * Abstract base class of the data generator subclasses.
+ */
+class DataGenerator
+{
+public:
+    DataGenerator() {}
+    virtual ~DataGenerator() {}
+
+    virtual string name() = 0;
+    virtual void generate_data(vector&lt;int&gt;&amp; data, int size) = 0;
+};
+
+#endif /* DATAGENERATOR_H_ */
+</pre>
+<p class="caption">DataRandom.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef DATARANDOM_H_
+#define DATARANDOM_H_
+
+#include &lt;cstdlib&gt;
+#include &lt;ctime&gt;
+#include "DataGenerator.h"
+
+/**
+ * Generator for unsorted random data.
+ */
+class DataRandom: public DataGenerator
+{
+public:
+    DataRandom() {}
+    virtual ~DataRandom() {}
+
+    /**
+     * Get the name of this data generator.
+     * @return the name.
+     */
+    string name() { return "Unsorted random"; }
+
+    vector&lt;int&gt; random_data;
+
+    /**
+     * Generate random values to fill a data vector.
+     * Reuse previously generated data if possible.
+     * @param data the target data vector.
+     * @param size the number of random data elements to generate.
+     */
+    virtual void generate_data(vector&lt;int&gt;&amp; data, int size)
+    {
+        data.clear();
+
+        // Reuse previously generated random data.
+        if (random_data.size() == size)
+        {
+            int size = random_data.size();
+            for (int i = 0; i &lt; size; i++) data.push_back(random_data[i]);
+        }
+
+        // Generate new random data.
+        else
+        {
+            random_data.clear();
+            srand(time(NULL));  // seed the random number generator
+
+            for (int i = 0; i &lt; size; i++) {
+                int r = rand()%size;
+                random_data.push_back(r);
+                data.push_back(r);
+            }
+        }
+    }
+};
+
+#endif /* DATARANDOM_H_ */
+</pre>
+<p class="caption">DataReverseSorted.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef DATAREVERSESORTED_H_
+#define DATAREVERSESORTED_H_
+
+#include "DataGenerator.h"
+
+/**
+ * Generator for reverse-sorted data.
+ */
+class DataReverseSorted: public DataGenerator
+{
+public:
+    DataReverseSorted() {}
+    virtual ~DataReverseSorted() {}
+
+    /**
+     * Get the name of this data generator.
+     * @return the name.
+     */
+    string name() { return "Reverse sorted"; }
+
+    /**
+     * Generate reverse sorted values (high to low) to fill a data vector.
+     * @param data the data vector to fill.
+     */
+    virtual void generate_data(vector&lt;int&gt;&amp; data, int size)
+    {
+        for (int i = 0; i &lt; size; i++) data.push_back(size - i);
+    }
+};
+
+#endif /* DATAREVERSESORTED_H_ */
+</pre>
+<p class="caption">DataSorted.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef DATASORTED_H_
+#define DATASORTED_H_
+
+#include "DataGenerator.h"
+
+/**
+ * Generator for already sorted data.
+ */
+class DataSorted: public DataGenerator
+{
+public:
+    DataSorted() {}
+    virtual ~DataSorted() {}
+
+    /**
+     * Get the name of this data generator.
+     * @return the name.
+     */
+    string name() { return "Already sorted"; }
+
+    /**
+     * Generate already sorted values (low to high) to fill a vector.
+     * @param data the data vector to fill.
+     */
+    virtual void generate_data(vector&lt;int&gt;&amp; data, int size)
+    {
+        for (int i = 0; i &lt; size; i++) data.push_back(i);
+    }
+};
+
+#endif /* DATASORTED_H_ */
+</pre>
+<p class="caption">InsertionSort.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef INSERTIONSORT_H_
+#define INSERTIONSORT_H_
+
+#include "VectorSorter.h"
+
+/**
+ * The class that implements the insertion sort algorithm
+ * for a vector of data.
+ */
+class InsertionSort: public VectorSorter
+{
+public:
+    InsertionSort();
+    virtual ~InsertionSort();
+
+    virtual string name() const;
+    virtual void run_sort_algorithm() throw (string);
+};
+
+#endif /* INSERTIONSORT_H_ */
+</pre>
+<p class="caption">LinkedList.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef LINKEDLIST_H_
+#define LINKEDLIST_H_
+
+#include "Node.h"
+
+/**
+ * The linked list class for mergesort.
+ */
+class LinkedList
+{
+public:
+    LinkedList();
+    LinkedList(Node *head, Node *tail, const int size);
+    virtual ~LinkedList();
+
+    Node *get_head() const;
+    Node *get_tail() const;
+    int   get_size() const;
+
+    void set(Node *head, Node *tail, int size);
+    Node *remove_head();
+
+    void add(int value);
+    void add(Node *node);
+
+    void clear();  // set head and tail to nullptr and delete all the nodes
+    void reset();  // set head and tail to nullptr but don't delete the nodes
+    void print() const;
+
+    void split(LinkedList&amp; list1, LinkedList&amp; list2);
+    void concatenate(LinkedList&amp; other_list);
+
+private:
+    Node *head;
+    Node *tail;
+    int size;
+};
+
+#endif /* LINKEDLIST_H_ */
+</pre>
+<p class="caption">ListSorter.cpp:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include "ListSorter.h"
+
+/**
+ * Default constructor.
+ */
+ListSorter::ListSorter() : Sorter() {}
+
+/**
+ * Destructor.
+ */
+ListSorter::~ListSorter() {}
+
+/**
+ * Generate the data to sort. The data can be random,
+ * already sorted, sorted in reverse, or all zeros.
+ * @param generator the data generator.
+ * @param size the number of data elements.
+ */
+void ListSorter::generate_data(DataGenerator *generator, int size)
+{
+    clear_data();
+
+    vector&lt;int&gt; v;
+    generator-&gt;generate_data(v, size);
+
+    for (int i = 0; i &lt; size; i++) data.add(v[i]);
+    set_size(size);
+}
+
+/**
+ * Print the data elements.
+ */
+void ListSorter::print_data() const
+{
+    Node *ptr = data.get_head();
+
+    while (ptr != nullptr)
+    {
+        cout &lt;&lt; " " &lt;&lt; ptr-&gt;value;
+        ptr = ptr-&gt;next;
+    }
+
+    cout &lt;&lt; endl;
+}
+
+/**
+ * Verify that the data is correctly sorted.
+ * @return true if correctly sorted, else false.
+ */
+bool ListSorter::is_data_sorted() const
+{
+    Node *ptr = data.get_head();
+
+    // Chase next pointers from start to end.
+    while ((ptr != nullptr) &amp;&amp; (ptr-&gt;next != nullptr))
+    {
+        if (ptr-&gt;value &gt; ptr-&gt;next-&gt;value) return false;  // incorrect
+        ptr = ptr-&gt;next;
+    }
+
+    return true;  // correct
+}
+
+/**
+ * Clear the data.
+ */
+void ListSorter::clear_data()
+{
+    if (data.get_size() &gt; 0) data.clear();
+}
+</pre>
+<p class="caption">ListSorter.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef LISTSORTER_H_
+#define LISTSORTER_H_
+
+#include &lt;string&gt;
+#include "Sorter.h"
+#include "LinkedList.h"
+
+/**
+ * Abstract base class of the singly linked list sorting subclasses.
+ */
+class ListSorter: public Sorter
+{
+public:
+    ListSorter();
+    virtual ~ListSorter();
+
+    virtual void generate_data(DataGenerator *generator, int size);
+    void print_data() const;
+    void clear_data();
+
+protected:
+    LinkedList data;  // the data to sort
+
+    bool is_data_sorted() const;
+};
+
+#endif /* LISTSORTER_H_ */
+</pre>
+<p class="caption">MergeSort.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef MERGESORT_H_
+#define MERGESORT_H_
+
+#include &lt;string&gt;
+#include "LinkedList.h"
+#include "ListSorter.h"
+
+/**
+ * The class that implements the mergesort algorithm
+ * for a singly linked list of data.
+ */
+class MergeSort: public ListSorter
+{
+public:
+    MergeSort();
+    MergeSort(string name);
+    virtual ~MergeSort();
+
+    virtual string name() const;
+    virtual void run_sort_algorithm() throw (string);
+
+private:
+    void mergesort(LinkedList&amp; list);
+    void merge(LinkedList&amp; list, LinkedList&amp; sublist1, LinkedList&amp; sublist2);
+
+    void clear();
+};
+
+#endif /* MERGESORT_H_ */
+</pre>
+<p class="caption">Node.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef NODE_H_
+#define NODE_H_
+
+/**
+ * A node of the linked list for mergesort.
+ */
+class Node
+{
+public:
+    Node() : value(0), next(nullptr) {}
+    Node(int value) : value(value), next(nullptr) {}
+    virtual ~Node() {};
+
+    int value;
+    Node *next;
+};
+
+#endif /* NODE_H_ */
+</pre>
+<p class="caption">QuickSortOptimal.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef QUICKSORTOPTIMAL_H_
+#define QUICKSORTOPTIMAL_H_
+
+#include "QuickSorter.h"
+
+/**
+ * The class that implements the optimal quicksort algorithm
+ * for a vector of data by using a good pivot strategy.
+ */
+class QuickSortOptimal: public QuickSorter
+{
+public:
+    QuickSortOptimal();
+    virtual ~QuickSortOptimal();
+
+    virtual string name() const;
+
+private:
+    virtual int choose_pivot_strategy(const int left, const int right);
+};
+
+#endif /* QUICKSORTOPTIMAL_H_ */
+</pre>
+<p class="caption">QuickSortSuboptimal.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef QUICKSORTSUBOPTIMAL_H_
+#define QUICKSORTSUBOPTIMAL_H_
+
+#include "QuickSorter.h"
+
+/**
+ * The class that implements the suboptimal quicksort algorithm
+ * for a vector of data by using a bad pivot strategy.
+ */
+class QuickSortSuboptimal: public QuickSorter
+{
+public:
+    QuickSortSuboptimal();
+    virtual ~QuickSortSuboptimal();
+
+    virtual string name() const;
+
+private:
+    virtual int choose_pivot_strategy(const int left, const int right);
+};
+
+#endif /* QUICKSORTSUBOPTIMAL_H_ */
+</pre>
+<p class="caption">QuickSorter.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef QUICKSORTER_H_
+#define QUICKSORTER_H_
+
+#include &lt;string&gt;
+#include "VectorSorter.h"
+
+/**
+ * The abstract base class of the quicksort subclasses.
+ */
+class QuickSorter: public VectorSorter
+{
+public:
+    QuickSorter();
+    QuickSorter(string name);
+    virtual ~QuickSorter();
+
+    virtual void run_sort_algorithm() throw (string);
+
+protected:
+    virtual int choose_pivot_strategy(const int left, const int right) = 0;
+
+private:
+    void quicksort(const int left, const int right);
+    int partition(const int left, const int right, const int pivot);
+    int choose_pivot(const int left, const int right);
+};
+
+#endif /* QUICKSORTER_H_ */
+</pre>
+<p class="caption">SelectionSort.cpp:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#include "SelectionSort.h"
+
+/**
+ * Default constructor.
+ */
+SelectionSort::SelectionSort() {}
+
+/**
+ * Destructor.
+ */
+SelectionSort::~SelectionSort() {}
+
+/**
+ * Get the name of this sorting algorithm.
+ * @return the name.
+ */
+string SelectionSort::name() const { return "Selection sort"; }
+
+/**
+ * Run the selection sort algorithm.
+ * @throws an exception if an error occurred.
+ */
+void SelectionSort::run_sort_algorithm() throw (string)
+{
+    int sizem1 = size - 1;
+
+    // For each element of the vector ...
+    for (int i = 0; i &lt; sizem1; i++)
+    {
+        long smallest = data[i];
+        int index_of_smallest = i;
+
+        // ... find the index of the smallest value
+        // in the rest of the vector.
+        for (int j = i + 1; j &lt; size; j++)
+        {
+            compare_count++;
+
+            if (data[j] &lt; smallest)
+            {
+                smallest = data[j];
+                index_of_smallest = j;
+            }
+        }
+
+        // Swap in the smallest value if it isn't already there.
+        if (i != index_of_smallest) swap(i, index_of_smallest);
+    }
+}
+</pre>
+<p class="caption">SelectionSort.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef SELECTIONSORT_H_
+#define SELECTIONSORT_H_
+
+#include "VectorSorter.h"
+
+/**
+ * The class that implements the selection sort algorithm
+ * for a vector of data.
+ */
+class SelectionSort: public VectorSorter
+{
+public:
+    SelectionSort();
+    virtual ~SelectionSort();
+
+    virtual string name() const;
+    virtual void run_sort_algorithm() throw (string);
+};
+
+#endif /* SELECTIONSORT_H_ */
+</pre>
+<p class="caption">ShellSortOptimal.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef SHELLSORTOPTIMAL_H_
+#define SHELLSORTOPTIMAL_H_
+
+#include "VectorSorter.h"
+
+/**
+ * The class that implements the optimal shellsort algorithm
+ * for a vector of data, where the diminishing increment is
+ * calculated according to Don Knuth.
+ */
+class ShellSortOptimal: public VectorSorter
+{
+public:
+    ShellSortOptimal();
+    virtual ~ShellSortOptimal();
+
+    virtual string name() const;
+    virtual void run_sort_algorithm() throw (string);
+};
+
+#endif /* SHELLSORTOPTIMAL_H_ */
+</pre>
+<p class="caption">ShellSortSuboptimal.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef SHELLSORTSUBOPTIMAL_H_
+#define SHELLSORTSUBOPTIMAL_H_
+
+#include "VectorSorter.h"
+
+/**
+ * The class that implements the suboptimal shellsort algorithm
+ * for a vector of data, where the diminishing increment is halved
+ * for each pass.
+ */
+class ShellSortSuboptimal: public VectorSorter
+{
+public:
+    ShellSortSuboptimal();
+    virtual ~ShellSortSuboptimal();
+
+    virtual string name() const;
+    virtual void run_sort_algorithm() throw (string);
+};
+
+#endif /* SHELLSORTSUBOPTIMAL_H_ */
+</pre>
+<p class="caption">SortTests.cpp:</p>
+<pre>//SAMPLE
+
+/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+#include &lt;string&gt;
+#include &lt;ctime&gt;
+#include &lt;chrono&gt;
+#include "DataRandom.h"
+#include "DataSorted.h"
+#include "DataReverseSorted.h"
+#include "DataAllZeros.h"
+#include "SelectionSort.h"
+#include "InsertionSort.h"
+#include "ShellSortSuboptimal.h"
+#include "ShellSortOptimal.h"
+#include "QuickSortSuboptimal.h"
+#include "QuickSortOptimal.h"
+#include "MergeSort.h"
+
+using namespace std;
+using namespace std::chrono;
+
+bool do_sort(Sorter *sorter, int n, DataGenerator *generator);
+void output_sort_stats(bool sorted, const Sorter *sorter);
+string commafy(long n);
+
+/**
+ * Main.
+ */
+int main()
+{
+    bool sorted;
+
+    // Number of data items to test.
+    int N[] = {100, 1000, /* 10000, 100000 */};
+
+    // Sorting algorithms.
+    Sorter *sorters[] =
+    {
+        new SelectionSort(),
+        new InsertionSort(),
+        new ShellSortSuboptimal(),
+        new ShellSortOptimal(),
+        new QuickSortSuboptimal(),
+        new QuickSortOptimal(),
+        new MergeSort(),
+    };
+
+    // Data generators.
+    DataGenerator *generators[] =
+    {
+        new DataRandom(),
+        new DataSorted(),
+        new DataReverseSorted(),
+        new DataAllZeros(),
+    };
+
+    steady_clock::time_point start_time = steady_clock::now();
+
+    // Loop for each data generator.
+    for (DataGenerator *generator : generators)
+    {
+        string generator_name = generator-&gt;name();
+
+        cout &lt;&lt; endl;
+        for (int i = 0; i &lt; generator_name.length(); i++) cout &lt;&lt; "=";
+        cout &lt;&lt; endl &lt;&lt; generator_name &lt;&lt; endl;
+        for (int i = 0; i &lt; generator_name.length(); i++) cout &lt;&lt; "=";
+        cout &lt;&lt; endl;
+
+        // Loop for each data size.
+        for (int n : N)
+        {
+            cout &lt;&lt; endl &lt;&lt; "N = " &lt;&lt; commafy(n) &lt;&lt; endl &lt;&lt; endl;
+            cout &lt;&lt; setw(25) &lt;&lt; "ALGORITHM" &lt;&lt; setw(15) &lt;&lt; "MOVES"
+                 &lt;&lt; setw(15) &lt;&lt; "COMPARES"  &lt;&lt; setw(15) &lt;&lt; "MILLISECONDS"
+                 &lt;&lt; endl;
+
+            // Loop for each sorting algorithm.
+            for (Sorter *sorter : sorters)
+            {
+                cout &lt;&lt; setw(25) &lt;&lt; sorter-&gt;name();
+                sorted = do_sort(sorter, n, generator);
+                output_sort_stats(sorted, sorter);
+
+                // Clean up after a sort.
+                sorter-&gt;clear_data();
+            }
+        }
+    }
+
+    // Pick up the garbage.
+    for (Sorter *sorter : sorters) delete sorter;
+    for (DataGenerator *generator : generators) delete generator;
+
+    steady_clock::time_point end_time = steady_clock::now();
+    long elapsed_time = duration_cast&lt;seconds&gt;(end_time - start_time).count();
+    cout &lt;&lt; endl &lt;&lt; "Done! " &lt;&lt; elapsed_time &lt;&lt; " seconds." &lt;&lt; endl;
+    return 0;
+}
+
+/**
+ * Perform a sort with a given algorithm and data generator.
+ * @param sorter the sorting algorithm.
+ * @param n the number of data elements to sort.
+ * @param generator the data generator.
+ */
+bool do_sort(Sorter *sorter, int n, DataGenerator *generator)
+{
+    // Generate data for the algoritnm to sort.
+    sorter-&gt;generate_data(generator, n);
+
+    try
+    {
+        return sorter-&gt;sort();  // do a sort
+    }
+    catch (string&amp; message)
+    {
+        cout &lt;&lt; endl &lt;&lt; message &lt;&lt; endl;
+        return false;
+    }
+}
+
+/**
+ * Output a sort algorithm's move and compare counts and elapsed time.
+ * @param sorted true if correctly sorted, else false.
+ * @param sorter the sorting algorithm.
+ */
+void output_sort_stats(bool sorted, const Sorter *sorter)
+{
+    if (sorted)
+    {
+        cout &lt;&lt; setw(15) &lt;&lt; commafy(sorter-&gt;get_move_count());
+        cout &lt;&lt; setw(15) &lt;&lt; commafy(sorter-&gt;get_compare_count());
+        cout &lt;&lt; setw(15) &lt;&lt; commafy(sorter-&gt;get_elapsed_ms());
+        cout &lt;&lt; endl;
+    }
+    else
+    {
+        cout &lt;&lt; "***** Sort error! *****" &lt;&lt; endl;
+    }
+}
+
+/**
+ * Convert a number to a string with commas.
+ * @param n the number.
+ */
+string commafy(long n)
+{
+    string str = to_string(n);
+    int pos = str.length() - 3;
+
+    while (pos &gt; 0)
+    {
+        str.insert(pos, ",");
+        pos -= 3;
+    }
+
+    return str;
+}
+</pre>
+<p class="caption">Sorter.cpp:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#include "Sorter.h"
+using namespace std;
+
+/**
+ * Default constructor.
+ */
+Sorter::Sorter()
+    : size(0), move_count(0), compare_count(0), elapsed_time(0) {}
+
+/**
+ * Destructor.
+ */
+Sorter::~Sorter() {}
+
+/**
+ * Get the data size.
+ * @return the size.
+ */
+int Sorter::get_size() const  { return size; }
+
+/**
+ * Set the data size.
+ * @param sz the size to set.
+ */
+void Sorter::set_size(int sz) { size = sz; }
+
+/**
+ * Get the number of moves during a sort.
+ * @return the number of moves.
+ */
+long Sorter::get_move_count() const      { return move_count; }
+
+/**
+ * Get the number of compares during a sort.
+ * @return the number of compares.
+ */
+long Sorter::get_compare_count() const      { return compare_count; }
+
+/**
+ * Sort the data by invoking the sorting algorithm.
+ * Count the number of data element moves and compares.
+ * Calculate the elapsed time in milliseconds.
+ * @throws an exception if an error occurred.
+ */
+bool Sorter::sort() throw (string)
+{
+    move_count = 0;
+    compare_count = 0;
+    start_timer();
+
+    // Sort the data according to the algorithm
+    // that is defined by the sorting subclasses.
+    run_sort_algorithm();
+
+    stop_timer();
+    return is_data_sorted();
+}
+
+/**
+ * Start the timer before beginning a sort.
+ */
+void Sorter::start_timer() { timer = steady_clock::now(); }
+
+/**
+ * Stop the timer after the sort finishes.
+ */
+void Sorter::stop_timer()
+{
+    steady_clock::time_point now = steady_clock::now();
+    elapsed_time = duration_cast&lt;milliseconds&gt;(now - timer).count();
+}
+
+/**
+ * Calculate the elapsed sort time.
+ * @return the elapsed time in milliseconds.
+ */
+long Sorter::get_elapsed_ms() const { return elapsed_time; }
+</pre>
+<p class="caption">Sorter.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef SORTER_H_
+#define SORTER_H_
+
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;ctime&gt;
+#include &lt;chrono&gt;
+#include "DataGenerator.h"
+
+using namespace std;
+using namespace std::chrono;
+
+/**
+ * The abstract base class of the sorting subclasses.
+ */
+class Sorter
+{
+public:
+    Sorter();
+    virtual ~Sorter();
+
+    // Name of the sorting algorithm.
+    virtual string name() const = 0;
+
+    // Size (number of data elements) to sort.
+    int get_size() const;
+    void set_size(int sz);
+
+    // Get the number of data element moves and compares
+    // during a sort, and the elapsed time in milliseconds.
+    long get_move_count() const;
+    long get_compare_count() const;
+    long get_elapsed_ms() const;
+
+    // Abstract functions to generate the data to sort.
+    virtual void generate_data(DataGenerator* generator, int size) = 0;
+
+    // Sort the data. Not abstract!
+    virtual bool sort() throw (string);
+
+    virtual void clear_data() = 0;
+    virtual void print_data() const = 0;  // useful for debugging
+
+protected:
+    int size;            // number of data elements to sort
+    long move_count;     // count of data element moves during a sort
+    long compare_count;  // count of data element compares during a sort
+
+    // Abstract functions to run a sort algorithm
+    // and to verify a correct sort.
+    virtual void run_sort_algorithm() throw (string) = 0;
+    virtual bool is_data_sorted() const = 0;
+
+private:
+    steady_clock::time_point timer;
+    long elapsed_time;
+
+    void start_timer();
+    void stop_timer();
+};
+
+#endif /* SORTER_H_ */
+</pre>
+<p class="caption">VectorSorter.cpp:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#include &lt;iostream&gt;
+#include &lt;ctime&gt;
+
+#include "VectorSorter.h"
+
+/**
+ * Default constructor.
+ */
+VectorSorter::VectorSorter() : Sorter() {}
+
+/**
+ * Destructor.
+ */
+VectorSorter::~VectorSorter() {}
+
+/**
+ * Generate the data to sort. The data can be random,
+ * already sorted, sorted in reverse, or all zeros.
+ * @param generator the data generator.
+ * @param size the number of data elements.
+ */
+void VectorSorter::generate_data(DataGenerator *generator, int size)
+{
+    clear_data();
+    generator-&gt;generate_data(data, size);
+    set_size(size);
+}
+
+/**
+ * Print the data elements.
+ */
+void VectorSorter::print_data() const
+{
+    int size = get_size();
+    for (int i = 0; i &lt; size; i++) cout &lt;&lt; " " &lt;&lt; data[i];
+
+    cout &lt;&lt; endl;
+}
+
+/**
+ * Verify that the data is correctly sorted.
+ * @return true if correctly sorted, else false.
+ */
+bool VectorSorter::is_data_sorted() const
+{
+    int sizem1 = get_size() - 1;
+    for (int i = 0; i &lt; sizem1; i++)
+    {
+        if (data[i] &gt; data[i+1]) return false;  // incorrect
+    }
+
+    return true;  // correct
+}
+
+/**
+ * Clear the data.
+ */
+void VectorSorter::clear_data()
+{
+    if (data.size() &gt; 0) data.clear();
+}
+
+/**
+ * Exchange the values of two data elements.
+ * Counts as two moves.
+ */
+void VectorSorter::swap(const int index1, const int index2)
+{
+    int temp = data[index1];
+    data[index1] = data[index2];
+    data[index2] = temp;
+
+    move_count += 2;
+}
+</pre>
+<p class="caption">VectorSorter.h:</p>
+<pre>/*
+ * Assignment #12: Compare sorting algorithms
+ *
+ * CMPE 180-92 Data Structures and Algorithms in C++
+ * Department of Computer Engineering
+ * R. Mak, Nov. 20, 2016
+ */
+#ifndef VECTORSORTER_H_
+#define VECTORSORTER_H_
+
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include "Sorter.h"
+using namespace std;
+
+/**
+ * Abstract base class of the vector sorting subclasses.
+ */
+class VectorSorter: public Sorter
+{
+public:
+    VectorSorter();
+    VectorSorter(string name);
+    virtual ~VectorSorter();
+
+    virtual void generate_data(DataGenerator *generator, int size);
+    void clear_data();
+    void print_data() const;
+
+protected:
+    vector&lt;int&gt; data;  // the vector to sort
+
+    bool is_data_sorted() const;
+    void swap(const int index1, const int index2);
+};
+
+#endif /* VECTORSORTER_H_ */
+</pre>
+<p class="header score">Score</p>
+<p class="score">0</p>
+<p class="download"><a href="InsertionSort.signed.zip">Download</a></p>
+<div class="footnotes"><div class="footnote">2016-12-08T11:29:09Z</div>
+</div>
+</body></html>
