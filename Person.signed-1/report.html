@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta name="Version" content="0.3"/>
+<meta name="Submission" content="16110506502902381846586704104"/>
+<meta name="Problem" content="161030035427rrky6h9snc44xpvsoutk541"/>
+<meta name="Level" content="1"/>
+<meta name="Time" content="2016-11-05T06:50:29Z"/>
+<meta name="ID" content="Person"/>
+<meta name="User" content="16110506359thn76nopt6y8svi0q5vw21r8"/>
+<meta name="Elapsed" content="2970 ms"/>
+<style type="text/css">
+.header {font-weight: bold; font-size: 1.2em; }
+.item {font-weight: bold;}
+.pass {color: green;}
+.fail {color: red;}
+table.file td {padding-right: 1em; background: #FFF; }
+.linenumber {color: gray;}
+.footnote {font-size: 0.7em;}
+table {font-size: 0.9em;}
+td, th { background: #EEE; margin: 0.5em; padding: 0.25em;}
+table.output td {vertical-align: top;}
+div.footnotes { border-top: 1px solid gray; padding-top: 0.5em; }
+</style>
+<title>Report</title>
+</head>
+<body>
+<p class="header run">Testing Genealogy.cpp</p>
+<table class="output">
+<tr><th>Actual output</th><th>Expected output</th></tr>
+<tr><td><pre>Charles (Mary)
+|
++---Susan (Bob)
+|    |
+<span class="fail">    +---Dick</span>
+|    |
+<span class="fail">    +---Harry</span>
+|
++---George
+|
++---Tom (Alice)
+    |
+    +---Eliza (Bud)
+    |
+    +---Emily (Carl)
+    |        |
+<span class="fail">        +---Tim</span>
+    |
+    +---Charlotte (Frank)
+        |
+        +---Carol
+        |
+        +---Sara
+
+Done!
+</pre></td>
+<td><pre>Charles (Mary)
+|
++---Susan (Bob)
+|   |
+|   +---Dick
+|   |
+|   +---Harry
+|
++---George
+|
++---Tom (Alice)
+    |
+    +---Eliza (Bud)
+    |
+    +---Emily (Carl)
+    |   |
+    |   +---Tim
+    |
+    +---Charlotte (Frank)
+        |
+        +---Carol
+        |
+        +---Sara
+
+Done!
+</pre></td>
+</tr>
+</table>
+<span class="fail">fail </span><p class="header studentFiles">Student files</p>
+<p class="caption">Person.cpp:</p>
+<pre>/*
+ * Person.cpp
+ *
+ *  Created on: Nov 3, 2016
+ *      Author: ajinkya
+ */
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include "Person.h"
+using namespace std;
+
+/***** Write the constructors. *****/
+
+Person::Person()
+{
+}
+Person::Person(int level, string name):level(level),name(name)
+{
+}
+
+Person::Person(int level, string name, string spouse):level(level),name(name),spouse_name(spouse)
+{
+
+}
+/**
+ * Destructor
+ */
+Person::~Person()
+{
+	/***** Complete this destructor: Recursively delete all the nodes. *****/
+	if(!children.empty())
+	{
+		for(int i=0;i&lt;children.size();i++)
+		{
+			delete children.at(i);
+		}
+	}
+}
+
+/**
+ * Have a child.
+ * @param child pointer to the new child.
+ */
+void Person::have_child(Person *child)
+{
+	/***** Complete this member function. *****/
+	children.push_back(child);
+	child-&gt;parent=this;
+}
+/**
+ * Print a person.
+ */
+void Person::print() const
+{
+	int i=0;
+	/***** Complete this member function: Recursively print the nodes. *****/
+
+	/*
+	 * Special case consideration not to print for level 0
+	 * */
+	if(!spouse_name.empty())
+	{
+		if(level&gt;=1)
+		{
+			print_bar();
+			cout&lt;&lt;endl;
+			for(int i=0;i&lt;((level-1)*4);i++)
+			{
+				cout&lt;&lt;" ";
+			}
+			cout&lt;&lt;"+---"&lt;&lt;name&lt;&lt;" ("&lt;&lt;spouse_name&lt;&lt;")"&lt;&lt;endl;
+		}
+		else
+		{
+			print_bar();
+			cout&lt;&lt;name&lt;&lt;" ("&lt;&lt;spouse_name&lt;&lt;")"&lt;&lt;endl;
+		}
+	}
+	else
+	{
+		print_bar();
+		cout&lt;&lt;endl;
+		for(int i=0;i&lt;((level-1)*4);i++)
+		{
+			cout&lt;&lt;" ";
+		}
+		cout&lt;&lt;"+---"&lt;&lt;name&lt;&lt;endl;
+	}
+/*
+ * Recursion
+ * */
+	while(i&lt;children.size())
+	{
+		children.at(i)-&gt;print();
+		i++;
+	}
+}
+
+void Person::print_bar() const
+{
+
+	if(level&gt;=2)
+	{
+		if(this-&gt;parent!=(this-&gt;parent-&gt;parent-&gt;children.at(this-&gt;parent-&gt;parent-&gt;children.size()-1)))
+		this-&gt;parent-&gt;print_bar();
+	}
+	if(level&gt;=1)
+		{
+			for(int i=0;i&lt;((level-1)*4);i++)
+			{
+				cout&lt;&lt;" ";
+			}
+			cout&lt;&lt;"|";
+		}
+}
+
+
+
+
+</pre>
+<p class="header providedFiles">Provided files</p>
+<p class="caption">Genealogy.cpp:</p>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include "Person.h"
+using namespace std;
+
+Person *make_tree();
+
+/**
+ * Main
+ */
+int main()
+{
+    Person *root = make_tree();
+    root-&gt;print();
+    delete root;
+
+    cout &lt;&lt; endl &lt;&lt; "Done!" &lt;&lt; endl;
+    return 0;
+}
+
+/**
+ * Dynamically construct a genealogy tree.
+ * @return the root of the tree.
+ */
+Person *make_tree()
+{
+    Person *charles = new Person(0, "Charles", "Mary");
+
+    Person *susan   = new Person(1, "Susan", "Bob");
+    Person *george  = new Person(1, "George");
+    Person *tom     = new Person(1, "Tom", "Alice");
+
+    charles-&gt;have_child(susan);
+    charles-&gt;have_child(george);
+    charles-&gt;have_child(tom);
+
+    Person *dick  = new Person(2, "Dick");
+    Person *harry = new Person(2, "Harry");
+
+    susan-&gt;have_child(dick);
+    susan-&gt;have_child(harry);
+
+    Person *eliza     = new Person(2, "Eliza", "Bud");
+    Person *charlotte = new Person(2, "Charlotte", "Frank");
+    Person *emily     = new Person(2, "Emily", "Carl");
+
+    tom-&gt;have_child(eliza);
+    tom-&gt;have_child(emily);
+    tom-&gt;have_child(charlotte);
+
+    Person *tim = new Person(3, "Tim");
+    emily-&gt;have_child(tim);
+
+    Person *carol = new Person(3, "Carol");
+    Person *sara  = new Person(3, "Sara");
+
+    charlotte-&gt;have_child(carol);
+    charlotte-&gt;have_child(sara);
+
+    return charles;
+}
+</pre>
+<p class="caption">Person.h:</p>
+<pre>#ifndef PERSON_H_
+#define PERSON_H_
+
+#include &lt;string&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+class Person
+{
+public:
+    Person();
+    Person(int level, string name);
+    Person(int level, string name, string spouse);
+    virtual ~Person();
+
+    void have_child(Person *child);
+    void print() const;
+
+private:
+    int level;  // oldest ancestor is level 0
+    string name;
+    string spouse_name;
+    Person *parent;
+    vector&lt;Person*&gt; children;
+
+    void print_bar() const;
+};
+
+#endif /* PERSON_H_ */
+</pre>
+<p class="header score">Score</p>
+<p class="score">0/1</p>
+<p class="download"><a href="Person.signed.zip">Download</a></p>
+<div class="footnotes"><div class="footnote">2016-11-05T06:50:29Z</div>
+</div>
+</body></html>
