@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta name="Version" content="0.3"/>
+<meta name="Submission" content="16102803493320063221564144834"/>
+<meta name="Problem" content="16102405141lugqpzfsxbmrpyxnro3f89sq"/>
+<meta name="Level" content="1"/>
+<meta name="Time" content="2016-10-28T03:49:54Z"/>
+<meta name="ID" content="SortedList"/>
+<meta name="User" content="1610280346cmt3q7z3jz4araxn18eym062o"/>
+<meta name="Elapsed" content="7583 ms"/>
+<style type="text/css">
+.header {font-weight: bold; font-size: 1.2em; }
+.item {font-weight: bold;}
+.pass {color: green;}
+.fail {color: red;}
+table.file td {padding-right: 1em; background: #FFF; }
+.linenumber {color: gray;}
+.footnote {font-size: 0.7em;}
+table {font-size: 0.9em;}
+td, th { background: #EEE; margin: 0.5em; padding: 0.25em;}
+table.output td {vertical-align: top;}
+div.footnotes { border-top: 1px solid gray; padding-top: 0.5em; }
+</style>
+<title>Report</title>
+</head>
+<body>
+<p class="header run">Testing PerformanceTests.cpp</p>
+<pre class="output">         |---Prepend---|   |-----Gets----|   |----Search---|   |----Remove---|   |----Append---|
+  Size   Vector     List   Vector     List   Vector     List   Vector     List   Vector     List
+   100     0 ms     0 ms     0 ms     0 ms     0 ms     0 ms     0 ms     0 ms     0 ms     0 ms
+   500     0 ms     0 ms     0 ms     1 ms     2 ms     2 ms     0 ms     0 ms     0 ms     0 ms
+  1000     0 ms     0 ms     0 ms     2 ms     4 ms     5 ms     0 ms     0 ms     0 ms     0 ms
+  5000     2 ms     0 ms     0 ms    12 ms    18 ms    30 ms     3 ms     0 ms     0 ms     0 ms
+ 10000    10 ms     0 ms     0 ms    25 ms    38 ms    55 ms     6 ms     0 ms     0 ms     0 ms
+ 50000   187 ms     5 ms     0 ms   114 ms   200 ms   293 ms   184 ms     3 ms     1 ms     4 ms
+100000   786 ms     9 ms     0 ms   244 ms   376 ms   599 ms   826 ms     8 ms     4 ms    11 ms
+
+Done!
+</pre>
+<p class="header studentFiles">Student files</p>
+<p class="caption">SortedList.cpp:</p>
+<pre>#include &lt;iostream&gt;
+#include &lt;iterator&gt;
+#include &lt;algorithm&gt;
+#include "SortedList.h"
+
+using namespace std;
+
+SortedList::SortedList()
+{
+}
+
+SortedList::~SortedList()
+{
+}
+
+/***** Complete this file. *****/
+
+bool SortedList::check()
+{
+    if (data.size() == 0) return true;
+
+    list&lt;int&gt;::iterator it = data.begin();
+    int prev = *it;
+    while ((++it != data.end()) &amp;&amp; (prev &lt;= *it));
+    return it == data.end();
+}
+
+void SortedList::prepend(int value)
+{
+	list&lt;int&gt;::iterator it = data.begin();
+	data.insert(it,value);
+}
+
+void SortedList::append(int value)
+{
+	list&lt;int&gt;::iterator it = data.begin();
+	data.push_back(value);
+}
+
+bool SortedList::find(int value) const
+{
+	list&lt;int&gt;::const_iterator it = data.begin();
+
+	it= std::find(data.begin(),data.end(),value);
+	if(it!=data.end())
+	return true;
+	else
+	return false;
+
+}
+
+int SortedList::get_value(int i) const
+{
+	list&lt;int&gt;::const_iterator itf= data.begin();
+	list&lt;int&gt;::const_reverse_iterator itr= data.rbegin();
+	int size=data.size();
+	int half=(size/2);
+	int count=0;
+	if(i&lt;half)
+	{
+		for(count=0;count&lt;i;count++)
+		{
+			itf++;
+		}
+		return *itf;
+	}
+	else
+	{
+		for(count=(size-1);count&gt;i;count--)
+		{
+			itr++;
+		}
+		return *itr;
+	}
+
+}
+
+void SortedList::clear()
+{
+	list&lt;int&gt;::iterator it= data.begin();
+
+	for(it=data.begin();it!=data.end();)
+	{
+		it=data.erase(it);
+	}
+}
+</pre>
+<p class="caption">SortedVector.cpp:</p>
+<pre>#include &lt;iostream&gt;
+#include &lt;iterator&gt;
+#include &lt;algorithm&gt;
+#include "SortedVector.h"
+
+using namespace std;
+
+SortedVector::SortedVector()
+{
+}
+
+SortedVector::~SortedVector()
+{
+}
+
+/***** Complete this file. *****/
+
+bool SortedVector::check()
+{
+    if (data.size() == 0) return true;
+
+    vector&lt;int&gt;::iterator it = data.begin();
+    int prev = *it;
+    while ((++it != data.end()) &amp;&amp; (prev &lt;= *it));
+    return it == data.end();
+}
+
+void SortedVector::prepend(int value)
+{
+	vector&lt;int&gt;::iterator it = data.begin();
+	data.insert(it,value);
+}
+
+void SortedVector::append(int value)
+{
+	vector&lt;int&gt;::iterator it = data.begin();
+	data.push_back(value);
+}
+
+bool SortedVector::find(int value) const
+{
+	vector&lt;int&gt;::const_iterator it = data.begin();
+
+	it=std::find(data.begin(),data.end(),value);
+		if(it!=data.end())
+		return true;
+		else
+		return false;
+
+}
+
+
+int SortedVector::get_value(int i) const
+{
+	vector&lt;int&gt;::const_iterator itf= data.begin();
+	return itf[i];
+}
+
+void SortedVector::clear()
+{
+	vector&lt;int&gt;::iterator it;
+
+	for(it=data.begin();it!=data.end();)
+	{
+		it=data.erase(it);
+	}
+}
+</pre>
+<p class="header providedFiles">Provided files</p>
+<p class="caption">PerformanceTests.cpp:</p>
+<pre>//SAMPLE
+#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+#include &lt;string&gt;
+#include &lt;ctime&gt;
+#include &lt;chrono&gt;
+#include "SortedVector.h"
+#include "SortedList.h"
+
+using namespace std;
+using namespace std::chrono;
+
+void test() throw (string);
+long elapsed_time(void f(SortedVector&amp; sv, int size), SortedVector&amp; sv, int size);
+long elapsed_time(void f(SortedList&amp; sl, int size), SortedList&amp; sl, int size);
+
+void vector_prepends(SortedVector&amp; sv, int size);
+void list_prepends(SortedList&amp; sl, int size);
+
+void vector_appends(SortedVector&amp; sv, int size);
+void list_appends(SortedList&amp; sl, int size);
+
+void vector_gets(SortedVector&amp; sv, int size) throw (string);
+void list_gets(SortedList&amp; sl, int size) throw (string);
+
+void vector_searches(SortedVector&amp; sv, int size);
+void list_searches(SortedList&amp; sl, int size);
+
+void vector_removes(SortedVector&amp; sv, int size);
+void list_removes(SortedList&amp; sl, int size);
+
+int main()
+{
+    srand(time(NULL));
+
+    try
+    {
+        test();
+    }
+    catch (string&amp; msg)
+    {
+        cout &lt;&lt; endl &lt;&lt; endl &lt;&lt; "***** " &lt;&lt; msg &lt;&lt; endl;
+        return -1;
+    }
+
+    cout &lt;&lt; endl &lt;&lt; "Done!" &lt;&lt; endl;
+    return 0;
+}
+
+void test() throw (string)
+{
+    cout &lt;&lt; "         |---Prepend---|   |-----Gets----|   |----Search---|   |----Remove---|   |----Append---|" &lt;&lt; endl;
+    cout &lt;&lt; "  Size   Vector     List   Vector     List   Vector     List   Vector     List   Vector     List" &lt;&lt; endl;
+
+    const int SIZES[] = {100, 500, 1000, 5000, 10000, 50000, 100000};
+    for (int size : SIZES)
+    {
+        SortedVector sv;
+        SortedList sl;
+        long etv, etl;
+
+        cout &lt;&lt; setw(6) &lt;&lt; size;
+
+        etv = elapsed_time(vector_prepends, sv, size);
+        cout &lt;&lt; setw(6) &lt;&lt; etv &lt;&lt; " ms";
+        etl = elapsed_time(list_prepends, sl, size);
+        cout &lt;&lt; setw(6) &lt;&lt; etl &lt;&lt; " ms";
+
+        if (!sv.check()) throw "Prepend: Vector sort error!";
+        if (!sl.check()) throw "Prepend: List sort error!";
+
+        etv = elapsed_time(vector_gets, sv, size);
+        cout &lt;&lt; setw(6) &lt;&lt; etv &lt;&lt; " ms";
+        etl = elapsed_time(list_gets, sl, size);
+        cout &lt;&lt; setw(6) &lt;&lt; etl &lt;&lt; " ms";
+
+        etv = elapsed_time(vector_searches, sv, size);
+        cout &lt;&lt; setw(6) &lt;&lt; etv &lt;&lt; " ms";
+        etl = elapsed_time(list_searches, sl, size);
+        cout &lt;&lt; setw(6) &lt;&lt; etl &lt;&lt; " ms";
+
+        etv = elapsed_time(vector_removes, sv, size);
+        cout &lt;&lt; setw(6) &lt;&lt; etv &lt;&lt; " ms";
+        etl = elapsed_time(list_removes, sl, size);
+        cout &lt;&lt; setw(6) &lt;&lt; etl &lt;&lt; " ms";
+
+        etv = elapsed_time(vector_appends, sv, size);
+        cout &lt;&lt; setw(6) &lt;&lt; etv &lt;&lt; " ms";
+        etl = elapsed_time(list_appends, sl, size);
+        cout &lt;&lt; setw(6) &lt;&lt; etl &lt;&lt; " ms";
+
+        if (!sv.check()) throw "Append: Vector sort error!";
+        if (!sl.check()) throw "Append: List sort error!";
+
+        cout &lt;&lt; endl;
+    }
+}
+
+long elapsed_time(void f(SortedVector&amp; sv, int size), SortedVector&amp; sv, int size)
+{
+    steady_clock::time_point start_time = steady_clock::now();
+    f(sv, size);
+    steady_clock::time_point end_time = steady_clock::now();
+    return duration_cast&lt;milliseconds&gt;(end_time - start_time).count();
+}
+
+long elapsed_time(void f(SortedList&amp; sl, int size), SortedList&amp; sl, int size)
+{
+    steady_clock::time_point start_time = steady_clock::now();
+    f(sl, size);
+    steady_clock::time_point end_time = steady_clock::now();
+    return duration_cast&lt;milliseconds&gt;(end_time - start_time).count();
+}
+
+void vector_prepends(SortedVector&amp; sv, int size)
+{
+    for (int i = size-1; i &gt;= 0; i--) sv.prepend(i);
+}
+
+void list_prepends(SortedList&amp; sl, int size)
+{
+    for (int i = size-1; i &gt;= 0; i--) sl.prepend(i);
+}
+
+void vector_appends(SortedVector&amp; sv, int size)
+{
+    for (int i = 0; i &lt; size; i++) sv.append(i);
+}
+
+void list_appends(SortedList&amp; sl, int size)
+{
+    for (int i = 0; i &lt; size; i++) sl.append(i);
+}
+
+void vector_gets(SortedVector&amp; sv, int size) throw (string)
+{
+    for (int i = 0; i &lt; 1000; i++)
+    {
+        int j = rand()%size;
+        int value = sv.get_value(j);
+        if (j != value) throw "Get: Vector data mismatch!";
+    }
+}
+
+void list_gets(SortedList&amp; sl, int size) throw (string)
+{
+    for (int i = 0; i &lt; 1000; i++)
+    {
+        int j = rand()%size;
+        int value = sl.get_value(j);
+        if (j != value) throw "Get: List data mismatch!";
+    }
+}
+
+void vector_searches(SortedVector&amp; sv, int size)
+{
+    for (int i = 0; i &lt; 1000; i++)
+    {
+        int value = rand()%size;
+        sv.find(value);
+    }
+}
+
+void list_searches(SortedList&amp; sl, int size)
+{
+    for (int i = 0; i &lt; 1000; i++)
+    {
+        int value = rand()%size;
+        sl.find(value);
+    }
+}
+
+void vector_removes(SortedVector&amp; sv, int size)
+{
+    sv.clear();
+}
+
+void list_removes(SortedList&amp; sl, int size)
+{
+    sl.clear();
+}
+</pre>
+<p class="caption">SortedList.h:</p>
+<pre>#ifndef SORTEDLIST_H_
+#define SORTEDLIST_H_
+
+#include &lt;list&gt;
+using namespace std;
+
+class SortedList
+{
+public:
+    SortedList();
+    virtual ~SortedList();
+
+    void prepend(int value);
+    void append(int value);
+    bool find(int value) const;
+    int get_value(int i) const;
+    void clear();
+    bool check();
+
+private:
+    list&lt;int&gt; data;
+};
+
+#endif /* SORTEDLIST_H_ */
+</pre>
+<p class="caption">SortedVector.h:</p>
+<pre>#ifndef SORTEDVECTOR_H_
+#define SORTEDVECTOR_H_
+
+#include &lt;vector&gt;
+using namespace std;
+
+class SortedVector
+{
+public:
+    SortedVector();
+    virtual ~SortedVector();
+
+    void prepend(int value);
+    void append(int value);
+    bool find(int value) const;
+    int get_value(int i) const;
+    void clear();
+    bool check();
+
+private:
+    vector&lt;int&gt; data;
+};
+
+#endif /* SORTEDVECTOR_H_ */
+</pre>
+<p class="header score">Score</p>
+<p class="score">0</p>
+<p class="download"><a href="SortedList.signed.zip">Download</a></p>
+<div class="footnotes"><div class="footnote">2016-10-28T03:49:54Z</div>
+</div>
+</body></html>

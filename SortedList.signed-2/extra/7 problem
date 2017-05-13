@@ -1,0 +1,46 @@
+         |---Prepend---|   |-----Gets----|   |----Search---|   |----Remove---|   |----Append---|
+  Size   Vector     List   Vector     List   Vector     List   Vector     List   Vector     List
+  5000     2 ms     0 ms
+ 10000     9 ms     1 ms
+ 15000    38 ms     2 ms
+ 20000    53 ms     2 ms
+ 25000    63 ms     2 ms
+ 30000    81 ms     4 ms
+ 35000   122 ms     3 ms
+ 40000   141 ms     3 ms
+ 45000   181 ms     4 ms
+ 50000   248 ms     7 ms
+ 55000   311 ms     7 ms
+ 60000   384 ms     9 ms
+ 65000   457 ms     9 ms
+ 70000   468 ms     5 ms
+ 75000   415 ms     5 ms
+ 80000   607 ms    10 ms
+ 85000   685 ms    12 ms
+ 90000   868 ms    13 ms
+ 95000   898 ms    12 ms
+100000   771 ms     7 ms
+105000   807 ms     8 ms
+110000   886 ms     8 ms
+115000   958 ms     9 ms
+120000  1051 ms     9 ms
+125000  1147 ms    10 ms
+130000  1233 ms    10 ms
+135000  1439 ms    16 ms
+140000  1656 ms    11 ms
+145000  2126 ms    11 ms
+150000  2048 ms    20 ms
+155000  1978 ms    18 ms
+160000  2344 ms    24 ms
+165000  2770 ms    18 ms
+170000  2732 ms    18 ms
+175000  2983 ms    22 ms
+180000  3263 ms    22 ms
+185000  3437 ms    15 ms
+190000  3431 ms    21 ms
+195000  3111 ms    27 ms
+200000  3629 ms    16 ms
+     0     0 ms     0 ms
+
+Done!
+

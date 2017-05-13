@@ -1,0 +1,43 @@
+      |---Prepend---|   |----Search---|   
+  Size   Vector     List   Vector     List   
+  5000     3 ms     0 ms    27 ms    35 ms
+ 10000    11 ms     1 ms    53 ms    64 ms
+ 15000    19 ms     1 ms    69 ms   109 ms
+ 20000    46 ms     3 ms   111 ms   155 ms
+ 25000    65 ms     2 ms   125 ms   179 ms
+ 30000    64 ms     2 ms   129 ms   138 ms
+ 35000   105 ms     3 ms   127 ms   162 ms
+ 40000   127 ms     6 ms   180 ms   302 ms
+ 45000   202 ms     5 ms   240 ms   284 ms
+ 50000   194 ms     4 ms   253 ms   359 ms
+ 55000   305 ms     8 ms   226 ms   253 ms
+ 60000   264 ms     4 ms   220 ms   340 ms
+ 65000   426 ms     7 ms   328 ms   319 ms
+ 70000   371 ms     5 ms   257 ms   323 ms
+ 75000   432 ms     6 ms   274 ms   348 ms
+ 80000   471 ms     6 ms   274 ms   366 ms
+ 85000   550 ms    11 ms   431 ms   544 ms
+ 90000   779 ms    14 ms   497 ms   475 ms
+ 95000   834 ms    13 ms   493 ms   671 ms
+100000   923 ms     8 ms   443 ms   682 ms
+105000   850 ms    10 ms   379 ms   512 ms
+110000  1218 ms     9 ms   389 ms   562 ms
+115000  1331 ms    10 ms   572 ms   559 ms
+120000  1385 ms     9 ms   413 ms   533 ms
+125000  1461 ms    10 ms   454 ms   571 ms
+130000  1586 ms    10 ms   448 ms   600 ms
+135000  1654 ms    11 ms   480 ms   664 ms
+140000  1765 ms    11 ms   504 ms   732 ms
+145000  1832 ms    11 ms   569 ms   922 ms
+150000  1982 ms    12 ms   627 ms   871 ms
+155000  2278 ms    16 ms   903 ms   838 ms
+160000  2251 ms    17 ms   762 ms   794 ms
+165000  2253 ms    22 ms   924 ms   773 ms
+170000  2584 ms    19 ms   824 ms   791 ms
+175000  2716 ms    24 ms   737 ms   851 ms
+180000  3206 ms    19 ms   682 ms   849 ms
+185000  3078 ms    22 ms   701 ms   861 ms
+190000  3305 ms    15 ms   681 ms   867 ms
+195000  3493 ms    15 ms   703 ms   895 ms
+200000  3623 ms    16 ms   688 ms   941 ms
+

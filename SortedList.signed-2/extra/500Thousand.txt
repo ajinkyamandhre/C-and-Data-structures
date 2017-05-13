@@ -1,0 +1,39 @@
+         |---Prepend---|   |-----Gets----|   |----Search---|   |----Remove---|   |----Append---|
+  Size   Vector     List   Vector     List   Vector     List   Vector     List   Vector     List
+   100     0 ms     0 ms     0 ms     0 ms     0 ms     0 ms     0 ms     0 ms     0 ms     0 ms
+   500     0 ms     0 ms     0 ms     1 ms     2 ms     2 ms     0 ms     0 ms     0 ms     0 ms
+  1000     0 ms     0 ms     0 ms     2 ms     5 ms     6 ms     0 ms     0 ms     0 ms     0 ms
+  5000     3 ms     0 ms     0 ms    16 ms    27 ms    37 ms     2 ms     0 ms     0 ms     0 ms
+ 10000    12 ms     1 ms     0 ms    31 ms    38 ms    48 ms     7 ms     0 ms     0 ms     0 ms
+ 50000   292 ms    33 ms     0 ms   203 ms   339 ms   360 ms   256 ms     4 ms     1 ms     4 ms
+100000  1048 ms    12 ms     0 ms   283 ms   517 ms   716 ms   964 ms     5 ms     2 ms     7 ms
+500000 25626 ms    50 ms     0 ms  1412 ms  1832 ms  2735 ms 25278 ms    38 ms    16 ms    43 ms
+
+Done!
+_________________________________________________________________________________________________________________________________
+
+
+
+1. [5 points] Explain the difference in timings between the vector and the linked list
+for the prepend operation.
+2. [5 points] Explain the difference in timings between the vector and the linked list
+for the get value operation,
+3. [5 points] Explain the difference in timings between the vector and the linked list
+for the search operation.
+4. [5 points] Explain the difference in timings between the vector and the linked list
+for the remove operation.
+5. [5 points] Explain the difference in timings between the vector and the linked list
+for the append operation.
+
+Answers
+
+1- For prepend operation there is a considerable difference in the times of vector and linkedlist.When we add elements to vectorwe need to repostion all the elements as the index gets disturbed (changed) to re-assign the indexes there is extra processing required.On the contrary in list there is no requirement to do any extra process as there is no indexing for insereted elements.
+
+2- In Gets operation ie to get the value from container, we pass the position of the value required. In vector, as we know the position we can directly dereference it without having to do any other processing, so the time required is ideally zero. For list we have to do traversing of the list elements to locate the value.Because of this there is processing required to traverse as a result list takes a considerable amount of time.
+
+3-In searching operation the list has to find the value, so we need to traverse the pointer to the required value and also need to keep a check on pointer.Simlarly the vectors to need to increament index and reach the value which is desired but there is quite less processing in vectors as compared to list.
+
+4-The remove operation for vectors take more time than list because when we remove the element we need to reposition the index and the elements this requires extra processing.In list there is no such need to do the re-indexing,we can directly remove the element and update the pointer.
+So vectors take more time than list.
+
+5-Append is a function where we add elements at the end of the list and vector. For vectors we donnot need to do reindexing just add the elements. For the list it is the same we just need to update the pointer at the end. So it clearly shows that the timing of two are nearly the same.
