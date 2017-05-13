@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta name="Version" content="0.3"/>
+<meta name="Submission" content="16092306056022836112554191519"/>
+<meta name="Problem" content="16091708133qzzdr5zkas8p3f0ib5zrzcwb"/>
+<meta name="Level" content="1"/>
+<meta name="Time" content="2016-09-23T06:05:28Z"/>
+<meta name="ID" content="students"/>
+<meta name="User" content="16090808147398810670381536779"/>
+<meta name="Elapsed" content="9829 ms"/>
+<style type="text/css">
+.header {font-weight: bold; font-size: 1.2em; }
+.item {font-weight: bold;}
+.pass {color: green;}
+.fail {color: red;}
+table.file td {padding-right: 1em; background: #FFF; }
+.linenumber {color: gray;}
+.footnote {font-size: 0.7em;}
+table {font-size: 0.9em;}
+td, th { background: #EEE; margin: 0.5em; padding: 0.25em;}
+table.output td {vertical-align: top;}
+div.footnotes { border-top: 1px solid gray; padding-top: 0.5em; }
+</style>
+<title>Report</title>
+</head>
+<body>
+<p class="header run">Testing students.cpp</p>
+<p class="caption">Input:</p>
+<pre class="output">STUDENT SCORES for C++
+
+  Tom Brown
+     90
+
+  Sarah Franklin
+     67  75  70  80
+
+  Andy Jones
+     82  89  88
+
+  Linus Paul
+     86  93
+
+  Lucy Pelt
+     63  69  73  71  82
+
+  Mary Poppins
+     100  99  98
+
+  Jane Smith
+     89  93  91
+
+  Frank Snooze
+     (none)
+
+  John Wayne
+     90  85  100  78  81
+
+  Amanda Young
+     95  91  100  97
+</pre>
+<span class="pass">pass </span><p class="header studentFiles">Student files</p>
+<p class="caption">students.cpp:</p>
+<pre>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;string&gt;
+
+
+using namespace std;
+
+typedef int* IntArrayPtr;
+typedef string* StrngPtr;
+
+const char* INPUT_FILE_NAME="students.txt";
+
+void Display_header();
+void Create_Dynamic_Array(StrngPtr &amp;name_students,IntArrayPtr *&amp;score_2D_array,ifstream&amp; input,int score_array[]);
+void Display(StrngPtr &amp;name_students,IntArrayPtr *&amp;score_2D_array,int score_array[]);
+
+int main()
+{
+    ifstream input;
+    string line;
+
+
+    int i=0,First_digit=0,Second_digit=0;
+    int nos_of_students=0;
+
+    input.open(INPUT_FILE_NAME);
+
+    if (input.fail())
+    {
+        cout &lt;&lt; "Failed to open " &lt;&lt; INPUT_FILE_NAME &lt;&lt; endl;
+        return -1;
+    }
+
+/*----------------extract the number of students------------------------*/
+    getline(input,line);
+
+    for(i=0;line[i]!='\0';i++)
+    {
+    	if(line[i]&gt;='0' &amp;&amp; line[i]&lt;='9')
+    	{
+		    if(line[i+1]&lt;='9' &amp;&amp; line[i+1]&gt;='0')
+		    {
+		    	First_digit=line[i]-48;// subtract 48 to convert digits in 'char' to 'int'
+		    	Second_digit=line[i+1]-48;
+		    }
+    	}
+    }
+
+    nos_of_students=(First_digit*10)+Second_digit;// get the number of students
+
+    StrngPtr name_students= new string[nos_of_students];
+    IntArrayPtr *score_2D_array= new IntArrayPtr[nos_of_students];
+    int* score_array= new int[nos_of_students];
+
+    Display_header();
+
+    Create_Dynamic_Array(name_students,score_2D_array,input,score_array);
+
+    Display(name_students,score_2D_array,score_array);
+
+/*------------------free the dynamic arrays--------------------------------------*/
+ 	delete [] name_students;
+
+ 	for(int j=0;j&lt;nos_of_students;j++)
+ 	{
+ 		delete [] score_2D_array[j];
+ 	}
+ 	delete [] score_array;
+ 	delete [] score_2D_array;
+
+
+ return 0;
+}
+
+void Display_header()
+{
+	cout&lt;&lt;"STUDENT SCORES for C++"&lt;&lt;endl;
+}
+
+void Create_Dynamic_Array(StrngPtr &amp;name_students,IntArrayPtr *&amp;score_2D_array,ifstream&amp; input,int score_array[])
+{
+	string line;
+	string extract_name;
+	string extract_marks;
+
+	 int i=0,j=0,p=0,k=0,First_digit=0,Second_digit=0,Third_digit=0,marks=0;
+
+	 int space_count=0,num_pos=0,nos_of_score=0;
+
+	 int flag_ones=0,flag=0,flag_3=0;
+
+	 while(getline(input,line))
+	 {
+		 for(i=0;line[i]!='\0';i++)
+		 {
+			 if(line[i]==' ')
+			 {
+				 space_count=space_count+1;
+			 }
+
+			 if(space_count==2 &amp;&amp; flag==0)
+		  	 {
+				 extract_name=line.substr(0,i);
+		  		 flag=2;
+
+		  		 if(flag==2 &amp;&amp; line[i+1]&lt;='9' &amp;&amp; line[i+1]&gt;='0')
+		  		 {
+		  			 nos_of_score=line[i+1]-48;//extraction of scores
+		  		 }
+		  	 }
+
+		  	if(space_count==3 &amp;&amp; flag_3==0)
+		  	{
+		  		flag_3=1;
+		  		num_pos=i;//start location to extract marks
+		  	}
+		 }//for ends
+
+	extract_marks=line.substr(num_pos,i-1);//function call to extract marks in string
+
+	    if(flag==2)
+	    {
+	    	name_students[j]= extract_name;//store name in dynamic array
+
+	    	if(nos_of_score!=0)
+	      	{
+	    		score_2D_array[j]=new int[nos_of_score];//2D array column allocation
+
+	    		score_array[j]=nos_of_score;
+	      	}
+	    	else
+	    	{
+	    		score_2D_array[j]=new int[0];
+	    		score_array[j]=0;
+	    	}
+	    }
+
+	    for(k=0,p=0;extract_marks[k]!='\0';k++)
+	    {
+	    	if(extract_marks[k]&lt;='9' &amp;&amp; extract_marks[k]&gt;='0')
+	    	{
+	    		First_digit=extract_marks[k]-48;
+	         	marks=First_digit;
+
+	        	score_2D_array[j][p]=marks; //dynamic array storing
+
+	        	if(extract_marks[k-1]==' ')
+	         	{
+	        		flag_ones=1;
+	         	}
+	        	/*----------------if marks are in 2 digits(75,82) go inside loop---------*/
+
+	         		if(extract_marks[k+1]&lt;='9' &amp;&amp; extract_marks[k+1]&gt;='0')
+	         		{
+	         			First_digit=extract_marks[k]-48;
+	  					Second_digit=extract_marks[k+1]-48;
+	  					marks=(First_digit*10)+Second_digit;
+
+					    score_2D_array[j][p]=marks;
+
+			   /*----------------if marks are in 3 digits(100) go inside loop---------*/
+
+					    if(extract_marks[k+2]&lt;='9' &amp;&amp; extract_marks[k+2]&gt;='0')
+					    {
+					    	First_digit=extract_marks[k]-48;
+					    	Second_digit=extract_marks[k+1]-48;
+					    	Third_digit=extract_marks[k+2]-48;
+					    	marks=(First_digit*100)+(Second_digit*10)+(Third_digit);
+
+					    	score_2D_array[j][p]=marks;
+					    }//if 3 digit marks
+	         		}//if 2 digit marks
+
+	         		if(flag_ones==1)
+	         		{
+	         			p++;//increment column index of marks array
+	         		}
+
+	 		}//if 1 digit
+
+	         	flag_ones=0;
+
+		}//for loop of marks extraction ends
+
+	        j++; // increament the row index of 2D array pointer to point to marks of next name
+	      	space_count=0;
+	      	flag=0;
+	      	flag_3=0;
+
+	      }//getline
+}
+
+void Display(StrngPtr &amp;name_students,IntArrayPtr *&amp;score_2D_array,int score_array[])
+{
+	int i=0,j=0,p=0;
+
+	for(j=0;j&lt;10;j++)
+	{
+		cout&lt;&lt;endl;
+		cout&lt;&lt;"  "&lt;&lt;name_students[j]&lt;&lt;endl;
+		cout&lt;&lt;"   ";
+		for(p=0;p&lt;score_array[j];p++)
+		{
+			if(score_array[j]&gt;0)
+			{
+				cout&lt;&lt;"  "&lt;&lt;score_2D_array[j][p];
+			}
+		}
+		if(score_array[j]==0)
+		cout&lt;&lt;"  (none)";
+		cout&lt;&lt;endl;
+	}
+}
+</pre>
+<p class="header providedFiles">Provided files</p>
+<p class="caption">students.txt:</p>
+<pre>C++ 10
+Tom Brown 1 90
+Sarah Franklin 4 67 75 70 80
+Andy Jones 3 82 89 88
+Linus Paul 2 86 93
+Lucy Pelt 5 63 69 73 71 82
+Mary Poppins 3 100 99 98
+Jane Smith 3 89 93 91
+Frank Snooze 0
+John Wayne 5 90 85 100 78 81
+Amanda Young 4 95 91 100 97
+</pre>
+<p class="header score">Score</p>
+<p class="score">1/1</p>
+<p class="download"><a href="students.signed.zip">Download</a></p>
+<div class="footnotes"><div class="footnote">2016-09-23T06:05:28Z</div>
+</div>
+</body></html>
