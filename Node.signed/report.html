@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta name="Version" content="0.3"/>
+<meta name="Submission" content="16101819122905640772758588105"/>
+<meta name="Problem" content="16100806284aw0zmi1by9nf8kf6l358m6k"/>
+<meta name="Level" content="1"/>
+<meta name="Time" content="2016-10-18T19:12:21Z"/>
+<meta name="ID" content="Node"/>
+<meta name="User" content="16100524397856926953227173924"/>
+<meta name="Elapsed" content="3218 ms"/>
+<style type="text/css">
+.header {font-weight: bold; font-size: 1.2em; }
+.item {font-weight: bold;}
+.pass {color: green;}
+.fail {color: red;}
+table.file td {padding-right: 1em; background: #FFF; }
+.linenumber {color: gray;}
+.footnote {font-size: 0.7em;}
+table {font-size: 0.9em;}
+td, th { background: #EEE; margin: 0.5em; padding: 0.25em;}
+table.output td {vertical-align: top;}
+div.footnotes { border-top: 1px solid gray; padding-top: 0.5em; }
+</style>
+<title>Report</title>
+</head>
+<body>
+<p class="header run">Testing SortedLinkedListTests.cpp</p>
+<p class="caption">Input:</p>
+<pre class="output">
+Integer test
+
+Inserting  50: 50
+Inserting  20: 20 50
+Inserting  70: 20 50 70
+Inserting  10: 10 20 50 70
+Inserting 100: 10 20 50 70 100
+Inserting  80: 10 20 50 70 80 100
+Inserting  90: 10 20 50 70 80 90 100
+Inserting  30: 10 20 30 50 70 80 90 100
+Inserting  40: 10 20 30 40 50 70 80 90 100
+Inserting  60: 10 20 30 40 50 60 70 80 90 100
+ 70 found
+ 15 not found
+100 found
+ 80 found
+ 95 not found
+110 not found
+ 60 found
+Removing  40: 10 20 30 50 60 70 80 90 100
+Removing  90: 10 20 30 50 60 70 80 100
+Removing  10: 20 30 50 60 70 80 100
+Removing 115: 20 30 50 60 70 80 100
+Removing  20: 30 50 60 70 80 100
+Removing  80: 30 50 60 70 100
+Removing  50: 30 60 70 100
+Removing  70: 30 60 100
+Removing  50: 30 60 100
+Removing 100: 30 60
+Removing  30: 60
+Removing  60: &lt;empty&gt;
+Removing  20: &lt;empty&gt;
+
+String test
+
+Inserting   science: science
+Inserting      math: math science
+Inserting   physics: math physics science
+Inserting chemistry: chemistry math physics science
+Inserting   english: chemistry english math physics science
+Inserting   history: chemistry english history math physics science
+Inserting    tennis: chemistry english history math physics science tennis
+  physics found
+astronomy not found
+  history found
+     math found
+      art not found
+Removing   science: chemistry english history math physics tennis
+Removing   history: chemistry english math physics tennis
+Removing    tennis: chemistry english math physics
+Removing chemistry: english math physics
+Removing      math: english physics
+Removing   history: english physics
+Removing   physics: english
+Removing       art: english
+Removing   english: &lt;empty&gt;
+
+Done!
+</pre>
+<span class="pass">pass </span><p class="header studentFiles">Student files</p>
+<p class="caption">Node.h:</p>
+<pre>#ifndef NODE_H_
+#define NODE_H_
+
+/***** Convert this to a class template to handle
+ ***** multiple types of data stored in the nodes. */
+
+using namespace std;
+
+template &lt;class T&gt;
+class Node
+{
+public:
+    Node(T value);
+    ~Node();
+
+    T data;
+    Node *next;
+};
+
+template &lt;class T&gt;
+Node&lt;T&gt;::Node(T value) : data(value), next(nullptr)
+{
+}
+
+template &lt;class T&gt;
+Node&lt;T&gt;::~Node()
+{
+}
+
+
+#endif /* NODE_H_ */
+</pre>
+<p class="caption">SortedLinkedList.h:</p>
+<pre>#ifndef SORTEDLINKEDLIST_H_
+#define SORTEDLINKEDLIST_H_
+
+/***** Convert this to a class template to handle
+ ***** multiple types of data stored in the nodes. */
+
+#include &lt;iostream&gt;
+#include "Node.h"
+
+using namespace std;
+
+
+/**
+ * A sorted linked list.
+ */
+ template &lt;class T&gt;
+class SortedLinkedList
+{
+public:
+    SortedLinkedList();
+    ~SortedLinkedList();
+
+    Node&lt;T&gt; *get_head() const;
+
+    Node&lt;T&gt; *find(T value) const;
+    Node&lt;T&gt; *insert(T value);
+    void remove(T value);
+    void clear();
+
+private:
+    Node&lt;T&gt; *head;
+};
+
+/**
+ * Default constructor.
+ */
+ template &lt;class T&gt;
+SortedLinkedList&lt;T&gt;::SortedLinkedList() : head(nullptr)
+{
+}
+
+/**
+ * Destructor.
+ */
+ template &lt;class T&gt;
+SortedLinkedList&lt;T&gt;::~SortedLinkedList()
+{
+    clear();
+}
+
+/**
+ * @return the head.
+ */
+template &lt;class T&gt;
+Node&lt;T&gt; *SortedLinkedList&lt;T&gt;::get_head() const { return head; }
+
+/**
+ * Find a node with a given value in the sorted list.
+ * @param value the value of the node to find.
+ * @return a pointer to the node if found, else nullptr.
+ */
+ template &lt;class T&gt;
+Node&lt;T&gt; *SortedLinkedList&lt;T&gt;::find(T value) const
+{
+    Node&lt;T&gt; *p = head;
+
+    // Search the sorted list.
+    while ((p != nullptr) &amp;&amp; (value &gt; p-&gt;data)) p = p-&gt;next;
+
+    if ((p != nullptr) &amp;&amp; (value == p-&gt;data)) return p;        // found
+    else                                      return nullptr;  // not found
+}
+
+/**
+ * Insert a node with a given value into the sorted list.
+ * @param value the value for the node to insert.
+ * @return a pointer to the inserted node.
+ */
+ template &lt;class T&gt;
+Node&lt;T&gt; *SortedLinkedList&lt;T&gt;::insert(T value)
+{
+    Node&lt;T&gt; *p = head;
+    Node&lt;T&gt; *prev = p;
+    Node&lt;T&gt; *new_node = new Node&lt;T&gt;(value);
+
+    // Are we inserting the first node?
+    if (head == nullptr)
+    {
+        head = new_node;
+        return new_node;
+    }
+
+    // Will the insertion be the new head?
+    else if (value &lt; head-&gt;data)
+    {
+        new_node-&gt;next = head;
+        head = new_node;
+        return new_node;
+    }
+
+    // Look for where to insert in the sorted list.
+    while ((p != nullptr) &amp;&amp; (value &gt;= p-&gt;data))
+    {
+        prev = p;
+        p = p-&gt;next;
+    }
+
+    // Insert the node.
+    prev-&gt;next = new_node;
+    new_node-&gt;next = p;
+
+    return new_node;
+}
+
+template &lt;class T&gt;
+
+void SortedLinkedList&lt;T&gt;::remove(T value)
+{
+    Node&lt;T&gt; *p = head;
+    Node&lt;T&gt; *prev = p;
+
+    if (head == nullptr) return;
+
+    // Is the value at the head?
+    if (value == head-&gt;data)
+    {
+        Node&lt;T&gt; *next = head-&gt;next;
+        delete head;
+        head = next;
+        return;
+    }
+
+    // Look for the node in the sorted list.
+    while ((p != nullptr) &amp;&amp; (value &gt; p-&gt;data))
+    {
+        prev = p;
+        p = p-&gt;next;
+    }
+
+    // If found, remove the node.
+    if ((p != nullptr) &amp;&amp; (value == p-&gt;data))
+    {
+        Node&lt;T&gt; *next = p-&gt;next;
+        delete p;
+        prev-&gt;next = next;
+    }
+}
+
+/**
+ * Clear the list of all nodes.
+ */
+ template &lt;class T&gt;
+void SortedLinkedList&lt;T&gt;::clear()
+{
+    // Repeatedly delete the head node until the list is empty.
+    while (head != nullptr)
+    {
+        Node&lt;T&gt; *next = head-&gt;next;
+        delete head;
+        head = next;
+    }
+}
+
+#endif /* SORTEDLINKEDLIST_H_ */
+</pre>
+<p class="caption">SortedLinkedListTests.cpp:</p>
+<pre>#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+#include &lt;string&gt;
+
+/***** Modify this file to test both integers
+ ***** and strings in the linked list.        */
+
+#include "SortedLinkedList.h"
+
+using namespace std;
+
+template &lt;class T&gt;
+void dump(SortedLinkedList&lt;T&gt; *list)
+{
+    Node&lt;T&gt; *p = list-&gt;get_head();
+
+    if (p == nullptr)
+    {
+        cout &lt;&lt; " &lt;empty&gt;" &lt;&lt; endl;
+        return;
+    }
+
+    while (p != nullptr)
+    {
+        cout &lt;&lt; " " &lt;&lt; p-&gt;data;
+        p = p-&gt;next;
+    }
+    cout &lt;&lt; endl;
+}
+
+template &lt;class T&gt;
+void test_integer()
+{
+    SortedLinkedList&lt;T&gt; *list = new SortedLinkedList&lt;T&gt;();
+    cout &lt;&lt; endl &lt;&lt; "Integer test" &lt;&lt; endl &lt;&lt; endl;
+
+    const int INSERT[] = {50, 20, 70, 10, 100, 80, 90, 30, 40, 60};
+    const int INSERT_LENGTH = sizeof(INSERT)/sizeof(INSERT[0]);
+
+    for (int i = 0; i &lt; INSERT_LENGTH; i++) {
+        int value = INSERT[i];
+        cout &lt;&lt; "Inserting " &lt;&lt; setw(3) &lt;&lt; value &lt;&lt; ":";
+        list-&gt;insert(value);
+        dump(list);
+    }
+
+    const int SEARCH[] = {70, 15, 100, 80, 95, 110, 60};
+    const int SEARCH_LENGTH = sizeof(SEARCH)/sizeof(SEARCH[0]);
+
+    for (int i = 0; i &lt; SEARCH_LENGTH; i++)
+    {
+        int value = SEARCH[i];
+        cout &lt;&lt; setw(3) &lt;&lt; value &lt;&lt; " ";
+
+        Node&lt;T&gt; *p = list-&gt;find(value);
+        if (p != nullptr) cout &lt;&lt; "found";
+        else              cout &lt;&lt; "not found";
+        cout &lt;&lt; endl;
+    }
+
+    const int REMOVE[] = {40, 90, 10, 115, 20, 80, 50, 70, 50, 100, 30, 60, 20};
+    const int REMOVE_LENGTH = sizeof(REMOVE)/sizeof(REMOVE[0]);
+
+    for (int i = 0; i &lt; REMOVE_LENGTH; i++)
+    {
+        int value = REMOVE[i];
+        cout &lt;&lt; "Removing " &lt;&lt; setw(3) &lt;&lt; value &lt;&lt; ":";
+        list-&gt;remove(value);
+        dump(list);
+    }
+
+    delete list;
+}
+
+template &lt;class T&gt;
+void test_string()
+{
+
+
+    SortedLinkedList&lt;T&gt; *list = new SortedLinkedList&lt;T&gt;();
+    cout &lt;&lt; endl &lt;&lt; "String test" &lt;&lt; endl &lt;&lt; endl;
+
+    const string INSERT[] = {"science", "math", "physics", "chemistry",
+                             "english", "history", "tennis"};
+    const int INSERT_LENGTH = sizeof(INSERT)/sizeof(INSERT[0]);
+
+    for (int i = 0; i &lt; INSERT_LENGTH; i++) {
+        string value = INSERT[i];
+        cout &lt;&lt; "Inserting " &lt;&lt; setw(9) &lt;&lt; value &lt;&lt; ":";
+        list-&gt;insert(value);
+        dump(list);
+    }
+
+    const string SEARCH[] = {"physics", "astronomy", "history", "math", "art"};
+    const int SEARCH_LENGTH = sizeof(SEARCH)/sizeof(SEARCH[0]);
+
+    for (int i = 0; i &lt; SEARCH_LENGTH; i++)
+    {
+        string value = SEARCH[i];
+        cout &lt;&lt; setw(9) &lt;&lt; value &lt;&lt; " ";
+
+        Node&lt;T&gt; *p = list-&gt;find(value);
+        if (p != nullptr) cout &lt;&lt; "found";
+        else              cout &lt;&lt; "not found";
+        cout &lt;&lt; endl;
+    }
+
+    const string REMOVE[] = {"science", "history", "tennis", "chemistry",
+                             "math", "history", "physics", "art", "english"};
+    const int REMOVE_LENGTH = sizeof(REMOVE)/sizeof(REMOVE[0]);
+
+    for (int i = 0; i &lt; REMOVE_LENGTH; i++)
+    {
+        string value = REMOVE[i];
+        cout &lt;&lt; "Removing " &lt;&lt; setw(9) &lt;&lt; value &lt;&lt; ":";
+        list-&gt;remove(value);
+        dump(list);
+    }
+
+    delete list;
+}
+
+int main()
+{
+    test_integer&lt;int&gt;();
+    test_string&lt;string&gt;();
+
+    cout &lt;&lt; endl &lt;&lt; "Done!" &lt;&lt; endl;
+}
+</pre>
+<p class="header score">Score</p>
+<p class="score">1/1</p>
+<p class="download"><a href="Node.signed.zip">Download</a></p>
+<div class="footnotes"><div class="footnote">2016-10-18T19:12:21Z</div>
+</div>
+</body></html>
