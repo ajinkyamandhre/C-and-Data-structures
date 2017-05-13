@@ -1,3 +1,9 @@
+/***************************************************************************/
+/*	The code is written by Ajinkya Mandhre				   */
+/*	For Educational purpose: for understanding the topic and cnocepts  */
+/*	This is is part of assignments that where given by Prof.Ron Mak    */
+/***************************************************************************/
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>
