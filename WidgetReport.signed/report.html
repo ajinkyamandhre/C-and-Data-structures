@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta name="Version" content="0.3"/>
+<meta name="Submission" content="16092721407640335235918841173"/>
+<meta name="Problem" content="1609262412ef8zb7r7fb7wdq8umbhj3e38w"/>
+<meta name="Level" content="1"/>
+<meta name="Time" content="2016-09-27T21:40:54Z"/>
+<meta name="ID" content="WidgetReport"/>
+<meta name="User" content="16090808147398810670381536779"/>
+<meta name="Elapsed" content="11737 ms"/>
+<style type="text/css">
+.header {font-weight: bold; font-size: 1.2em; }
+.item {font-weight: bold;}
+.pass {color: green;}
+.fail {color: red;}
+table.file td {padding-right: 1em; background: #FFF; }
+.linenumber {color: gray;}
+.footnote {font-size: 0.7em;}
+table {font-size: 0.9em;}
+td, th { background: #EEE; margin: 0.5em; padding: 0.25em;}
+table.output td {vertical-align: top;}
+div.footnotes { border-top: 1px solid gray; padding-top: 0.5em; }
+</style>
+<title>Report</title>
+</head>
+<body>
+<p class="header run">Testing WidgetReport.cpp</p>
+<p class="caption">Input:</p>
+<pre class="output">STATE PLANT DEPT EMPID COUNT NAME 
+
+   12    34   56   789     4 George Carter 
+   12    34   56   799     6 Mary Clinton 
+
+			  10 TOTAL FOR DEPT  56 *
+
+   12    34   57   639     8 Alfred Lincoln 
+
+			   8 TOTAL FOR DEPT  57 *
+			  18 TOTAL FOR PLANT 34 **
+
+   12    40   57   710     8 Kim Kennedy 
+   12    40   57   990     6 Jina Johnson 
+
+			  14 TOTAL FOR DEPT  57 *
+
+   12    40   75   426    10 Ruby Roosevelt 
+   12    40   75   551     7 John Washington 
+
+			  17 TOTAL FOR DEPT  75 *
+			  31 TOTAL FOR PLANT 40 **
+			  49 TOTAL FOR state 12 ***
+
+   33    22   11   297    10 Hilda Hoover 
+   33    22   11   428    11 Ted Truman 
+   33    22   11   808     3 Nora Nixon 
+
+			  24 TOTAL FOR DEPT  11 *
+
+   33    22   14   629     9 Mabel Bush 
+
+			   9 TOTAL FOR DEPT  14 *
+			  33 TOTAL FOR PLANT 22 **
+
+   33    27   19   321     5 Chris Adams 
+
+			   5 TOTAL FOR DEPT  19 *
+			   5 TOTAL FOR PLANT 27 **
+			  38 TOTAL FOR STATE 33 ***
+
+			  87 GRAND TOTAL	****</pre>
+<span class="pass">pass </span><p class="header studentFiles">Student files</p>
+<p class="caption">WidgetReport.cpp:</p>
+<pre>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+#include &lt;iomanip&gt;
+
+using namespace std;
+
+class WidgetReport
+{
+    /***** Complete this class. *****/
+
+public:
+    WidgetReport(ifstream&amp; in);  // constructor
+    void print();
+    void Extractdata();
+
+private:
+    ifstream&amp; input;  // reference to the input stream
+    string line,data,name,header;
+    int linenumber,state,plant,dept,empid,cnt;
+    int state1,plant1,dept1,flag,flag1;
+    int dept_total,plant_total,state_total,grand_total;
+};
+
+const char* INPUT_FILE_NAME = "widgets.txt";
+
+int main()
+{
+    ifstream input;
+
+    input.open(INPUT_FILE_NAME);
+    if (input.fail())
+    {
+        cout &lt;&lt; "Failed to open " &lt;&lt; INPUT_FILE_NAME &lt;&lt; endl;
+        return -1;
+    }
+
+    // Generate and print the Widget Report.
+    /***** Complete this main. *****/
+
+    WidgetReport a(input);
+
+    a.Extractdata();
+
+    input.close();
+    return 0;
+}
+
+/*****Put member function definitions after the main*****/
+
+WidgetReport::WidgetReport(ifstream&amp; in):input(in),linenumber(0),state(0),plant(0),dept(0),empid(0),cnt(0)
+{
+	name="";
+	data="";
+	state1=0;
+	plant1=0;
+	dept1=0;
+	flag=0;
+	dept_total=0;
+	plant_total=0;
+	state_total=0;
+	grand_total=0;
+	flag1=0;
+}
+
+void WidgetReport::print()
+{
+	if(linenumber&gt;1 &amp;&amp; flag1==0)
+	{
+		if(flag==0)
+		{
+			state1=state;
+			plant1=plant;
+			dept1=dept;
+			flag=1;
+		}
+		if(state1!=state)
+		{
+			cout&lt;&lt;"\n\t\t\t  "&lt;&lt;setw(2)&lt;&lt;dept_total&lt;&lt;" TOTAL FOR DEPT  "&lt;&lt;dept1&lt;&lt;setw(2)&lt;&lt;" *"&lt;&lt;endl;
+			cout&lt;&lt;"\t\t\t  "&lt;&lt;setw(2)&lt;&lt;plant_total&lt;&lt;" TOTAL FOR PLANT "&lt;&lt;plant1&lt;&lt;setw(2)&lt;&lt;" **"&lt;&lt;endl;
+			cout&lt;&lt;"\t\t\t  "&lt;&lt;setw(2)&lt;&lt;state_total&lt;&lt;" TOTAL FOR state "&lt;&lt;state1&lt;&lt;setw(2)&lt;&lt;" ***"&lt;&lt;endl&lt;&lt;endl;
+
+			state_total=0;
+			plant_total=0;
+			dept_total=0;
+			state1=state;
+			plant1=plant;
+			dept1=dept;
+		}
+		else if(plant1!=plant)
+		{
+			cout&lt;&lt;"\n\t\t\t  "&lt;&lt;setw(2)&lt;&lt;dept_total&lt;&lt;" TOTAL FOR DEPT  "&lt;&lt;dept1&lt;&lt;setw(2)&lt;&lt;" *"&lt;&lt;endl;
+			cout&lt;&lt;"\t\t\t  "&lt;&lt;setw(2)&lt;&lt;plant_total&lt;&lt;" TOTAL FOR PLANT "&lt;&lt;plant1&lt;&lt;setw(2)&lt;&lt;" **"&lt;&lt;endl&lt;&lt;endl;
+			plant_total=0;
+			dept_total=0;
+			plant1=plant;
+			dept1=dept;
+		}
+		else if(dept1!=dept)
+		{
+			cout&lt;&lt;"\n\t\t\t  "&lt;&lt;dept_total&lt;&lt;" TOTAL FOR DEPT  "&lt;&lt;dept1&lt;&lt;setw(2)&lt;&lt;" *"&lt;&lt;endl&lt;&lt;endl;
+			dept_total=0;
+			dept1=dept;
+		}
+
+		state_total=state_total+cnt;
+		plant_total=plant_total+cnt;
+		dept_total=dept_total+cnt;
+		grand_total=grand_total+cnt;
+
+		cout&lt;&lt;setw(5)&lt;&lt;state;
+		cout&lt;&lt;setw(6)&lt;&lt;plant;
+		cout&lt;&lt;setw(5)&lt;&lt;dept;
+		cout&lt;&lt;setw(6)&lt;&lt;empid;
+		cout&lt;&lt;setw(6)&lt;&lt;cnt;
+		cout&lt;&lt;" "&lt;&lt;setw(2)&lt;&lt;name&lt;&lt;endl;
+
+	}//if ends
+	else if(linenumber==1)
+	{
+		string first_header,name_header,count_header;
+		int count_pos;
+		int pos=0;
+
+		pos=header.find("NAME");
+
+		first_header=header.substr(0,pos-1);
+
+		count_pos=header.find("COUNT");
+
+		name_header=header.substr(pos,(count_pos-pos));
+
+		count_header=header.substr(count_pos,(header.length()-count_pos));
+
+		cout&lt;&lt;first_header&lt;&lt;" "&lt;&lt;count_header&lt;&lt;" "&lt;&lt;name_header&lt;&lt;endl&lt;&lt;endl;
+	}
+	else
+	{
+		cout&lt;&lt;"\n\t\t\t  "&lt;&lt;setw(2)&lt;&lt;dept_total&lt;&lt;" TOTAL FOR DEPT  "&lt;&lt;dept1&lt;&lt;setw(2)&lt;&lt;" *"&lt;&lt;endl;
+		cout&lt;&lt;"\t\t\t  "&lt;&lt;setw(2)&lt;&lt;plant_total&lt;&lt;" TOTAL FOR PLANT "&lt;&lt;plant1&lt;&lt;setw(2)&lt;&lt;" **"&lt;&lt;endl;
+		cout&lt;&lt;"\t\t\t  "&lt;&lt;setw(2)&lt;&lt;state_total&lt;&lt;" TOTAL FOR STATE "&lt;&lt;state1&lt;&lt;setw(2)&lt;&lt;" ***"&lt;&lt;endl&lt;&lt;endl;
+		cout&lt;&lt;"\t\t\t  "&lt;&lt;setw(2)&lt;&lt;grand_total&lt;&lt;" GRAND TOTAL\t****";
+	}
+}
+
+void WidgetReport::Extractdata()
+{
+	int i=0,count=0,pos=0;
+	string temp;
+
+	while(getline(input,line))
+	{
+		linenumber=linenumber+1;
+
+		for(i=0;i&lt;line.size();i++)
+		{
+			if(linenumber==1)
+			{
+				header=line;
+			}
+
+			else if(linenumber&gt;1 &amp;&amp; line.at(i)==' ')
+			{
+				count=count+1;
+
+				if(count==1)
+				{
+					temp=line.substr(pos,(i-pos));
+					state=stoi(temp);
+					pos=i;
+				}
+				if(count==2)
+				{
+					temp=line.substr(pos+1,(i-pos));
+					plant=stoi(temp);
+					pos=i;
+				}
+				if(count==3)
+				{
+					temp=line.substr(pos+1,(i-pos));
+					dept=stoi(temp);
+					pos=i;
+				}
+				if(count==4)
+				{
+					temp=line.substr(pos+1,(i-pos));
+					empid=stoi(temp);
+					pos=i;
+				}
+				if(count==6 )
+				{
+					name=line.substr(pos+1,(i-pos));
+					pos=i;
+
+					temp=line.substr(pos+1,(line.length()-pos));
+					cnt=stoi(temp);
+					count=0;
+					pos=0;
+				}
+			}//if loop of space check
+		}//for loop of string scanning
+/*
+ * function call to print the data line by line
+ * */
+
+		print();
+
+	}//while ends here
+/*
+ *print the last line and grand total
+ */
+	flag1=1;
+	print();
+
+}
+</pre>
+<p class="header providedFiles">Provided files</p>
+<p class="caption">widgets.txt:</p>
+<pre>STATE PLANT DEPT EMPID NAME COUNT
+12 34 56 789 George Carter 4
+12 34 56 799 Mary Clinton 6
+12 34 57 639 Alfred Lincoln 8
+12 40 57 710 Kim Kennedy 8
+12 40 57 990 Jina Johnson 6
+12 40 75 426 Ruby Roosevelt 10
+12 40 75 551 John Washington 7
+33 22 11 297 Hilda Hoover 10
+33 22 11 428 Ted Truman 11
+33 22 11 808 Nora Nixon 3
+33 22 14 629 Mabel Bush 9
+33 27 19 321 Chris Adams 5
+</pre>
+<p class="header score">Score</p>
+<p class="score">1/1</p>
+<p class="download"><a href="WidgetReport.signed.zip">Download</a></p>
+<div class="footnotes"><div class="footnote">2016-09-27T21:40:54Z</div>
+</div>
+</body></html>
